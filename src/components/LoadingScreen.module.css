@@ -1,0 +1,41 @@
+/* Define la animación para el primer cuadrado */
+@keyframes moverCuadrado1 {
+    0% { transform: translateX(0); } /* Estado inicial */
+    25% { transform: translateX(100%); }
+    50% { transform: translateX(0);}
+    75% { transform: translateY(100%); }
+    100% { transform: translateY(0); } /* Estado final */
+  }
+  
+  /* Define la animación para el segundo cuadrado */
+  @keyframes moverCuadrado2 {
+    0% { transform: translateX(0); } /* Estado inicial */
+    50% { transform: translateX(100%); }
+    100% { transform: translateX(0); } /* Estado final */
+  }
+  
+  /* Aplica las animaciones a los elementos cuadrados */
+  .cuadrado1,
+  .cuadrado2 {
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+  }
+  
+  .cuadrado1 {
+    background-color: #ffffff;
+    animation-name: moverCuadrado1;
+    animation-duration: 3s; /* Duración de la animación */
+    animation-timing-function: linear; /* Movimiento lineal */
+    animation-iteration-count: infinite; /* Repetición infinita */
+  }
+  
+  .cuadrado2 {
+    background-color: rgb(0, 0, 0);
+    animation-name: moverCuadrado2;
+    animation-duration: 1.5s; /* Duración de la animación */
+    animation-timing-function: linear; /* Movimiento lineal */
+    animation-iteration-count: infinite; /* Repetición infinita */
+  }
+  
