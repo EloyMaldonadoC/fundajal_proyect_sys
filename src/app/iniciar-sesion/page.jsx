@@ -9,7 +9,7 @@ export default function page() {
   return (
     <div className={styles.main_container}>
         <div className={styles.container}>
-          <h2>Inicia Sesión para poder Acceder</h2>
+          <h2>Inicia sesión para poder acceder</h2>
           <LoginForm/>
         </div>
       </div>
