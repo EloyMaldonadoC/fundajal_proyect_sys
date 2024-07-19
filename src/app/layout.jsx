@@ -1,6 +1,7 @@
 "use client"
 import { Inter } from "next/font/google";
 import { usePathname,useRouter } from "next/navigation";
+import IonIcon from "@reacticons/ionicons";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -29,11 +30,11 @@ export default function RootLayout({ children }) {
                   <button className="logo" onClick={ handleButtonClick }>Fundación Jalisco</button>
                   <nav className="navigation">
                     <ul>
-                      <li><a href="/entregas">Entregas</a></li>
-                      <li><a href="/inventario">Inventario</a></li>
-                      <li><a href="/vehiculos">Vehiculos</a></li>
-                      <li><a href="/empleados">Empleados</a></li>
-                      <li><a href="/historial">Historial</a></li>
+                      <li><button onClick={() => { router.push('/entregas') }}><IonIcon name="calendar" size="medium"/><p>Entregas</p></button></li>
+                      <li><button onClick={() => { router.push('/inventario') }}><IonIcon name="server" size="medium"/><p>Inventario</p></button></li>
+                      <li><button onClick={() => { router.push('/vehiculos') }}><IonIcon name="car" size="medium"/><p>Vehiculos</p></button></li>
+                      <li><button onClick={() => { router.push('/empleados') }}><IonIcon name="person" size="medium"/><p>Empleados</p></button></li>
+                      <li><button onClick={() => { router.push('/historial') }}><IonIcon name="stats-chart" size="medium"/><p>Historial</p></button></li>
                     </ul>
                   </nav>
                 </div>
