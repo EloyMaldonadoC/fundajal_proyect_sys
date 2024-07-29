@@ -8,28 +8,17 @@ export async function GET(request, { params }) {
 
         if (result.length == 0) {
             return NextResponse.json(
-                {
-                    message: "Producto no encontrado"
-                },
-                {
-                    status: 404
-                }
+                { message: "Producto no encontrado" }, { status: 404 }
             )
         }
         return NextResponse.json(result[0])
 
     } catch (error) {
         return NextResponse.json(
-            {
-                message: error.message
-            },
-            {
-                status: 500
-            }
+            { message: error.message }, { status: 500 }
         )
     }
-    }
-   
+}
 
 export async function DELETE(request, { params }) {
     try {
@@ -37,24 +26,14 @@ export async function DELETE(request, { params }) {
 
         if (result.affectedRows == 0) {
             return NextResponse.json(
-                {
-                    message: "Producto no encontrado"
-                },
-                {
-                    status: 404
-                }
+                { message: "Producto no encontrado" }, { status: 404 }
             )
         }
 
         return new Response(null,{ status: 204})
     } catch (error) {
         return NextResponse.json(
-            {
-                message: error.message
-            },
-            {
-                status: 500
-            }
+            { message: error.message }, { status: 500 }
         )
     }
 }
