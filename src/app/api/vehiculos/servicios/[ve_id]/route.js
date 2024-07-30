@@ -4,13 +4,13 @@ import { connection } from "@/libs/mysql";
 export async function GET(request, { params }) {
   try {
     const result = await connection.query(
-      "SELECT * FROM proveedores WHERE prov_id = ?",
-      [params.prov_id]
+      "SELECT * FROM servicios WHERE ve_id = ?",
+      [params.ve_id]
     );
 
     if (result.length == 0) {
       return NextResponse.json(
-        { message: "Proveedor no encontrado" },
+        { message: "servicio no encontrado" },
         { status: 404 }
       );
     }
@@ -25,20 +25,20 @@ export async function PUT(request, { params }) {
     const data = await request.json();
     console.log(data);
     const result = await connection.query(
-      "UPDATE proveedores SET ? WHERE prov_id = ?",
-      [data, params.prov_id]
+      "UPDATE servicios SET ? WHERE ve_id = ?",
+      [data, params.ve_id]
     );
 
     if (result.affectedRows == 0) {
       return NextResponse.json(
-        { message: "Proveedor no encontrado" },
+        { message: "servicio no encontrado" },
         { status: 404 }
       );
     }
 
     const updatedProduct = await connection.query(
-      "SELECT * FROM proveedores WHERE prov_id = ?",
-      [params.prov_id]
+      "SELECT * FROM servicios WHERE ve_id = ?",
+      [params.ve_id]
     );
     return NextResponse.json(updatedProduct);
   } catch (error) {
@@ -49,15 +49,16 @@ export async function PUT(request, { params }) {
 export async function DELETE(request, { params }) {
   try {
     const result = await connection.query(
-      "DELETE FROM proveedores WHERE prov_id = ?",
-      [params.prov_id]
+      "DELETE FROM servicios WHERE ve_id = ?",
+      [params.ve_id]
     );
     if (result.affectedRows == 0) {
       return NextResponse.json(
-        { message: "Proveedor no encontrado" },
+        { message: "servicio no encontrado" },
         { status: 404 }
       );
     }
+    return new Response(null, { status: 204 });
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
