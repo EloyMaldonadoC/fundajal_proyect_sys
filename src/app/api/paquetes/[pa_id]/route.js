@@ -57,6 +57,10 @@ export async function DELETE(request, { params }) {
         { status: 404 }
       );
     }
+    const resultDelete = await connection.query(
+      "DELETE FROM producto_paquete WHERE pa_id = ?",
+      [params.pa_id]
+    )
     return new Response(null, { status: 204 });
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
