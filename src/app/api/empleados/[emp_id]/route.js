@@ -3,8 +3,10 @@ import { connection } from "@/libs/mysql";
 
 export async function GET(request, { params }) {
   try {
-    const result = await connection.query(
-      "SELECT * FROM empleados WHERE emp_id = ?",
+    const result = await connection.query(`
+      SELECT emp_id, emp_nombre, emp_apellido, emp_num_tel, emp_rol, 
+      emp_estado, emp_hora_entrada, emp_hora_salida, emp_foto, emp_usuario
+      FROM empleados WHERE emp_id = ?;`,
       [params.emp_id]
     );
     if (result.length == 0) {
@@ -16,6 +18,8 @@ export async function GET(request, { params }) {
     return NextResponse.json(result[0]);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
   }
 }
 
@@ -35,13 +39,17 @@ export async function PUT(request, { params }) {
       );
     }
 
-    const updatedProduct = await connection.query(
-      "SELECT * FROM empleados WHERE emp_id = ?",
+    const updatedProduct = await connection.query(`
+      SELECT emp_id, emp_nombre, emp_apellido, emp_num_tel, emp_rol, 
+      emp_estado, emp_hora_entrada, emp_hora_salida, emp_foto, emp_usuario
+      FROM empleados WHERE emp_id = ?;`,
       [params.emp_id]
     );
     return NextResponse.json(updatedProduct[0]);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
   }
 }
 
@@ -60,5 +68,7 @@ export async function DELETE(request, { params }) {
     return new Response(null, { status: 204 });
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
   }
 }
