@@ -2,30 +2,35 @@ import { NextResponse } from "next/server";
 import { connection } from "@/libs/mysql";
 
 export async function GET(request) {
-  const sql = `SELECT entregas.en_id, paquetes.*, entrega_paquete.en_pa_estado, entrega_paquete.en_pa_cantidad
-        FROM entrega_paquete
-        JOIN entregas ON entrega_paquete.en_id = entregas.en_id 
-        JOIN paquetes ON entrega_paquete.pa_id = paquetes.pa_id`;
+  const sql = `SELECT * FROM entrega_paquete`;
   try {
     const result = await connection.query(sql)
     return NextResponse.json(result)
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 })
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
   }
 }
 export async function POST(request) {
   try {
-    const { en_id, pa_id, en_pa_estado, en_pa_cantidad } = await request.json();
-    const sql = `INSERT INTO entrega_paquete (en_id, pa_id, en_pa_estado, en_pa_cantidad) VALUES (?, ?, ?, ?)`;
-    const result = await connection.query(sql, [
-      en_id,
-      pa_id,
-      en_pa_estado,
-      en_pa_cantidad,
-    ]);
+    const paquetes = await request.json();
+    const query = `INSERT INTO entrega_paquete (en_id, pa_id, en_pa_estado, en_pa_cantidad, en_pa_precio, en_pa_desc) VALUES ?;`;
+    const values = paquetes.map(paquete => [
+      paquete.en_id,
+      paquete.pa_id,
+      paquete.en_pa_estado,
+      paquete.en_pa_cantidad,
+      paquete.en_pa_precio,
+      paquete.en_pa_desc
+  ])
+
+    const result = await connection.query(query, [values]);
     console.log(result);
-    return NextResponse.json({ en_id, pa_id, en_pa_estado, en_pa_cantidad });
+    return NextResponse.json("Paquetes agregados");
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
   }
 }

@@ -12,17 +12,27 @@ export async function GET(request) {
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
   }
 }
 
 export async function POST(request) {
   try {
-    const { en_id, ve_id } = await request.json();
-    const sql = `INSERT INTO entrega_vehiculo (en_id, ve_id) VALUES (?, ?)`;
-    const result = await connection.query(sql, [en_id, ve_id]);
+    const vehiculos = await request.json();
+    console.log(vehiculos)
+    const query = `INSERT INTO entrega_vehiculo (en_id, ve_id) VALUES ?`;
+    const values = vehiculos.map(vehiculo => [
+      vehiculo.en_id,
+      vehiculo.ve_id
+    ]);
+    const result = await connection.query(query, [values]);
+
     console.log(result);
-    return NextResponse.json({ en_id, ve_id });
+    return NextResponse.json("Vehiculos agregados");
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
   }
-}
+} 

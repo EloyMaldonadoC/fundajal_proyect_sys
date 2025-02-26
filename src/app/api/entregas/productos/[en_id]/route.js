@@ -8,9 +8,35 @@ export async function GET(request, { params }) {
     JOIN productos ON entrega_producto.produc_id = productos.produc_id
     WHERE entrega_producto.en_id = ?`;
   try {
-    const result = await connection.query(sql, [params.en_id])
-    return NextResponse.json(result)
+    const result = await connection.query(sql, [params.en_id]);
+    return NextResponse.json(result);
   } catch (error) {
-    return NextResponse.json({ message: error.message }, { status: 500 })
+    return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
+  }
+}
+
+export async function DELETE(request, { params }) {
+  try {
+    const result = await connection.query(
+      "DELETE FROM entrega_producto WHERE en_id = ?",
+      [params.en_id]
+    );
+    if (result.affectedRows >  0) {
+      return NextResponse.json(
+        { message: "Fila eliminada" },
+        { status: 200 }
+      )
+    } else {
+      return NextResponse.json(
+        { message: "Productis no encontrados" },
+        { status: 404 }
+      )
+    }
+  } catch (error) {
+    return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
   }
 }
