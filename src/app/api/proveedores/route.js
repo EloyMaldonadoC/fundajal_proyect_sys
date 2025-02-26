@@ -7,12 +7,15 @@ export async function GET(request) {
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
   }
 }
 
 export async function POST(request) {
   try {
     const {
+      prov_id,
       prov_nombre,
       prov_numero_cont,
       prov_direccion,
@@ -20,8 +23,9 @@ export async function POST(request) {
       prov_estado,
       prov_rfc,
     } = await request.json();
-    const query = `INSERT INTO proveedores (prov_nombre, prov_numero_cont, prov_direccion, prov_municipio, prov_estado, prov_rfc) VALUES (?, ?, ?, ?, ?, ?)`;
+    const query = `INSERT INTO proveedores (prov_id, prov_nombre, prov_numero_cont, prov_direccion, prov_municipio, prov_estado, prov_rfc) VALUES (?, ?, ?, ?, ?, ?, ?)`;
     const result = await connection.query(query, [
+      prov_id,
       prov_nombre,
       prov_numero_cont,
       prov_direccion,
@@ -31,6 +35,7 @@ export async function POST(request) {
     ]);
     console.log(result);
     return NextResponse.json({
+      prov_id,
       prov_nombre,
       prov_numero_cont,
       prov_direccion,
@@ -40,5 +45,7 @@ export async function POST(request) {
     });
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
   }
 }

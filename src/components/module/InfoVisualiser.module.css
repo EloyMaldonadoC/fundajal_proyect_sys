@@ -1,0 +1,43 @@
+.container {
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    box-sizing: border-box;
+    padding: 16px;
+    width: 40%;
+    border-radius: 16px;
+}
+@media (min-width: 768px) {
+    .container {
+        margin-left: 4px;
+    }
+}
+
+.title {
+    margin-bottom: 8px;
+}
+
+.btn, .eliminar {
+    border: none;
+    padding: 8px 16px 8px 16px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    border-radius: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.eliminar {
+    background-color: var(--candy-apple-red);
+    color: var(--components-color);
+    margin-left: 8px;
+}
+
+.btn_container {
+    margin-top: 8px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: flex-end;
+}

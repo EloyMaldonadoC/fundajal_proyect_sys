@@ -1,0 +1,81 @@
+.validar {
+  border: 2px solid red;
+  border-radius: 16px;
+}
+.container {
+  margin-top: 8px;
+}
+.content {
+  box-sizing: border-box;
+  padding: 8px 16px 8px 16px;
+  background-color: var(--components-color);
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.menu {
+  box-sizing: border-box;
+  padding: 16px 16px 8px 16px;
+  background-color: var(--text-color);
+  border-radius: 16px 16px 0px 0px;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.header {
+  box-sizing: border-box;
+  padding: 8px 16px 16px 16px;
+  background-color: black;
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.nombre {
+  flex-basis: 33%;
+  flex-grow: 1;
+  max-width: 33%;
+}
+.precio {
+  flex-basis: 33%;
+  flex-grow: 1;
+  max-width: 33%;
+}
+.cantidad {
+  flex-basis: 33%;
+  flex-grow: 1;
+  max-width: 33%;
+}
+.footer {
+  box-sizing: border-box;
+  padding: 12px;
+  border-radius: 0px 0px 16px 16px;
+  background-color: var(--components-color);
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  margin-bottom: 8px;
+}
+.button {
+  box-sizing: border-box;
+  border: none;
+  border-radius: 100%;
+  padding: 8px 12px 8px 12px;
+  box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.button:active {
+  transform: scale(0.95);
+}
+.disabled {
+  background-color: var(--botton-color);
+}
+.enabled {
+  background-color: black;
+  color: white;
+}
+.buttonsContainer {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}

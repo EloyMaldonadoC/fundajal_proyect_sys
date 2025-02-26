@@ -1,0 +1,183 @@
+.herramientas {
+  box-sizing: border-box;
+  padding: 8px 16px 8px 16px;
+  margin-top: 8px;
+  border-radius: 16px;
+  background-color: var(--botton-color);
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  align-items: center;
+  display: flexbox;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  display: flex;
+}
+.input {
+  padding: 4px ;
+  border-radius: 8px;
+  box-shadow: inset 0px 4px 6px var(--shadow-color),
+            inset 4px -4px 6px var(--shadow-color);
+  outline: none;
+  box-sizing: border-box;
+    margin-right: 8px;
+    display: inline-block;
+  border: 1px solid var(--text-color);
+  width: 80px;
+}
+.select {
+  padding: 4px ;
+  border-radius: 8px;
+  box-shadow: inset 0px 4px 6px var(--shadow-color),
+            inset 4px -4px 6px var(--shadow-color);
+  outline: none;
+  box-sizing: border-box;
+    margin-right: 8px;
+    display: inline-block;
+}
+.validar {
+  color: red;
+  border-color: red;
+}
+.validarTexto {
+  color: red;
+}
+.header {
+    box-sizing: border-box;
+    padding: 8px;
+    background-color: var(--text-color);
+    color: white;
+    border-radius: 16px 16px 0px 0px;
+    text-align: center;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+  }
+  .container {
+    box-sizing: border-box;
+    padding: 8px 16px 8px 16px;
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .container.desplegado {
+    margin-top: 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background-color: var(--botton-color);
+  }
+  .container.desplegado:hover {
+    background-color: var(--botton-color);
+  }
+  .container:hover {
+    background-color: var(--button-color);
+  }
+  .contenedorHistorial {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 8px;
+    margin: 8px;
+    border-radius: 8px;
+    align-content: center;
+  }
+  .fooder {
+    box-sizing: border-box;
+    padding: 8px;
+    border-radius: 0px 0px 16px 16px;
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    margin-bottom: 16px;
+  }
+  .button {
+    box-sizing: border-box;
+    border: none;
+    border-radius: 100%;
+    margin: 0px 2px 8px 2px;
+    padding: 8px 12px 8px 12px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    align-self: center;
+  }
+  .button:active {
+    transform: scale(0.95);
+  }
+  .disabled {
+    background-color: var(--botton-color);
+  }
+  .enabled {
+    background-color: black;
+    color: white;
+  }
+  .totalPrecio {
+    box-sizing: border-box;
+    width: 45%;
+    padding: 0px 8px 8px 8px;
+    border-radius: 0px 0px 16px 16px;
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    margin-bottom: 8px;
+    justify-self: end;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+  .totalTexto {
+    flex-basis: 50%;
+    flex-grow: 1;
+    max-width: 50%;
+  }
+  .totalCantidad {
+    flex-basis: 50%;
+    flex-grow: 1;
+    max-width: 50%;
+  }
+  .titulo {
+    box-sizing: border-box;
+    padding: 0px 16px 16px 8px;
+    background-color: black;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    color: white;
+    display: flex;
+    flex-wrap: wrap;  
+    text-align: center;
+    align-content: center;
+  }
+  .texto {
+    box-sizing: border-box;
+    margin-bottom: 4px;
+  }
+  .nombre {
+    flex-basis: 40%;
+    flex-grow: 1;
+    max-width: 40%;
+  }
+  .cantidad {
+    flex-basis: 15%;
+    flex-grow: 1;
+    max-width: 15%;
+  }
+  .estado {
+    flex-basis: 15%;
+    flex-grow: 1;
+    max-width: 15%;
+  }
+  .precio {
+    flex-basis: 15%;
+    flex-grow: 1;
+    max-width: 15%;
+  }
+  .participacion {
+    flex-basis: 15%;
+    flex-grow: 1;
+    max-width: 15%;
+  }
+  .verde {
+    color: var(--apple-green);
+  }
+  .rojo {
+    color: var(--candy-apple-red);
+  }

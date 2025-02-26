@@ -1,0 +1,125 @@
+.header {
+    box-sizing: border-box;
+    padding: 16px;
+    background-color: var(--text-color);
+    color: white;
+    border-radius: 16px 16px 0px 0px;
+    text-align: center;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+  }
+  .container {
+    box-sizing: border-box;
+    padding: 8px 16px 8px 16px;
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .container:hover {
+    background-color: var(--button-color);
+  }
+  .fooder {
+    box-sizing: border-box;
+    padding: 8px;
+    border-radius: 0px 0px 16px 16px;
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    margin-bottom: 16px;
+  }
+  .totalPrecio {
+    box-sizing: border-box;
+    width: 45%;
+    padding: 0px 8px 8px 8px;
+    border-radius: 0px 0px 16px 16px;
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    margin-bottom: 8px;
+    justify-self: end;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+  .totalTexto {
+    flex-basis: 50%;
+    flex-grow: 1;
+    max-width: 50%;
+  }
+  .totalCantidad {
+    flex-basis: 50%;
+    flex-grow: 1;
+    max-width: 50%;
+  }
+  .titulo {
+    box-sizing: border-box;
+    padding: 0px 16px 16px 8px;
+    background-color: black;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    color: white;
+    display: flex;
+    flex-wrap: wrap;  
+    text-align: center;
+    align-content: center;
+  }
+  .texto {
+    box-sizing: border-box;
+    margin-bottom: 4px;
+  }
+  .nombre {
+    flex-basis: 30%;
+    flex-grow: 1;
+    max-width: 30%;
+  }
+  .cantidad {
+    flex-basis: 10%;
+    flex-grow: 1;
+    max-width: 10%;
+  }
+  .precio {
+    flex-basis: 10%;
+    flex-grow: 1;
+    max-width: 10%;
+  }
+  .estado {
+    flex-basis: 10%;
+    flex-grow: 1;
+    max-width: 10%;
+  }
+  .motivo {
+    flex-basis: 10%;
+    flex-grow: 1;
+    max-width: 10%;
+  }
+  .hora {
+    flex-basis: 10%;
+    flex-grow: 1;
+    max-width: 10%;
+  }
+  .fecha {
+    flex-basis: 30%;
+    flex-grow: 1;
+    max-width: 30%;
+  }
+  .circulo {
+    box-sizing: border-box;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0px 8px 0px 8px;
+  }
+  .verde {
+    color: var(--apple-green);
+  }
+  .circulo.amarillo {
+    background-color: yellow;
+  }
+  .rojo {
+    color: var(--candy-apple-red);
+  }

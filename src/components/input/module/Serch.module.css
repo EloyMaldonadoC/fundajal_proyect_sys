@@ -1,0 +1,53 @@
+@media (min-width: 768px) {
+  .input {
+    width: 200px;
+    box-sizing: border-box;
+    padding: 8px;
+    border: 0px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 12px 0px 0px 12px;
+    outline: none;
+    box-shadow: inset 0px 4px 6px var(--shadow-color),
+                inset 4px -4px 6px var(--shadow-color);
+  }
+}
+@media (max-width: 768px) {
+  .input {
+    width: 100px;
+    box-sizing: border-box;
+    padding: 8px;
+    border: 0px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 12px 0px 0px 12px;
+    outline: none;
+    box-shadow: inset 0px 4px 6px var(--shadow-color),
+                inset 4px -4px 6px var(--shadow-color);
+  }
+}
+.container {
+  width: max-content;
+}
+.button {
+  box-sizing: border-box;
+  border: none;
+  color: white;
+  background-color: black;
+  padding: 8px 8px 8px 8px;
+  border-radius: 0px 12px 12px 0px;
+  font-weight: bold;
+  cursor: pointer;
+  align-content: center;
+}
+.button.light {
+  background-color: var(--botton-color);
+  color: black;
+}
+.button.dark {
+  background-color: var(--text-color);
+  color: white;
+}
+.button:active{
+  transform: scale(0.95);
+}

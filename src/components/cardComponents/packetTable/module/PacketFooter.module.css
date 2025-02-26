@@ -1,0 +1,7 @@
+.contenedor {
+    box-sizing: border-box;
+    background-color: var(--components-color);
+    border-radius: 0px 0px 16px 16px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    padding: 8px;
+}

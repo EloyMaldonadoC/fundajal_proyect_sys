@@ -1,0 +1,70 @@
+.header {
+    box-sizing: border-box;
+    padding: 16px;
+    background-color: var(--text-color);
+    color: white;
+    border-radius: 16px 16px 0px 0px;
+    text-align: center;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+  }
+  .container {
+    box-sizing: border-box;
+    padding: 8px 16px 8px 16px;
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+  .fooder {
+    box-sizing: border-box;
+    padding: 8px;
+    border-radius: 0px 0px 16px 16px;
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    margin-bottom: 8px;
+  }
+  .titulo {
+    box-sizing: border-box;
+    padding: 0px 16px 16px 8px;
+    background-color: black;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    color: white;
+    display: flex;
+    flex-wrap: wrap;  
+    text-align: center;
+  }
+  .texto {
+    box-sizing: border-box;
+    margin-bottom: 4px;
+  }
+  .nombre {
+    flex-basis: 28%;
+    flex-grow: 1;
+    max-width: 28%;
+  }
+  .disponible {
+    flex-basis: 15%;
+    flex-grow: 1;
+    max-width: 15%;
+  }
+  .precio {
+    flex-basis: 15%;
+    flex-grow: 1;
+    max-width: 15%;
+  }
+  .vender {
+    flex-basis: 42%;
+    flex-grow: 1;
+    max-width: 42%;
+  }
+  .input {
+    box-sizing: border-box;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--text-color);
+    width: 45px;
+    margin-right: 4px;
+  }

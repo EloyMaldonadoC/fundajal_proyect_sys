@@ -1,0 +1,55 @@
+.encabezado {
+    box-sizing: border-box;
+    padding: 16px;
+    border-radius: 16px 16px 0px 0px;
+    background-color: var(--text-color);
+    color: white;
+    text-align: center;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.contenedor {
+    box-sizing: border-box;
+    padding: 16px 16px 4px 16px;
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.seleccionado {
+    box-sizing: border-box;
+    padding: 4px 8px 4px 8px;
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.datosSeleccionados {
+    box-sizing: border-box;
+    padding: 4px 8px 4px 8px;
+    background-color: var(--botton-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    border-radius: 8px;
+}
+.pie {
+    box-sizing: border-box;
+    padding: 8px;
+    border-radius: 0px 0px 16px 16px;
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.checkbox {
+    box-sizing: border-box;
+}
+.espaciado {
+    box-sizing: border-box;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.select {
+    box-sizing: border-box;
+    padding: 4px 8px 4px 8px;
+    border-radius: 8px;
+    box-shadow: inset 0px 4px 6px var(--shadow-color),
+              inset 4px -4px 6px var(--shadow-color);
+    outline: none;
+}
+.validar {
+    color: red;
+    border-color: red;
+}

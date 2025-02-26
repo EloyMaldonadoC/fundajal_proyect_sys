@@ -1,0 +1,111 @@
+.contenedor {
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  background-color: var(--components-color);
+  box-shadow: 0px 4px 6px var(--shadow-color);
+
+  transition: transform 0.2s, box-shadow 0.2s, margin-top 0.2s, margin-bottom 0.2s, border-radius 0.2s;
+}
+.contenedor.levantado {
+  box-sizing: border-box;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  transform: scale(1.01)
+}
+.fila:hover {
+  background-color: var(--botton-color);
+  border-radius: 8px;
+  box-shadow: 0px 2px 3px var(--shadow-color);
+}
+.fila:active{
+  transform: scale(0.98);
+}
+.fila {
+  box-sizing: border-box;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  transition: border-radius 0.5s, box-shadow 0.5s;
+}
+.celda {
+  text-align: center;
+  flex-basis: 25%;
+  flex-grow: 1;
+  max-width: 25%;
+}
+.informacion {
+  box-sizing: border-box;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.encabezado {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: black;
+  color: white;
+  border-radius: 12px 12px 0px 0px;
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  padding: 4px;
+}
+.contenido {
+  box-sizing: border-box;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  background-color: var(--components-color);
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  display: flex;
+  flex-wrap: wrap;
+}
+.piedepagina {
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 0px 0px 12px 12px;
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  padding: 8px;
+}
+.item {
+  text-align: center;
+  flex-basis: 33%;
+  flex-grow: 1;
+  max-width: 33%;
+}
+@media (min-width: 768px) {
+    .productos {
+        text-align: center;
+        flex-basis: 80%;
+        flex-grow: 1;
+        max-width: 80%;
+      }
+      .opciones {
+        text-align: center;
+        flex-basis: 20%;
+        flex-grow: 1;
+        max-width: 20%;
+        align-content: center;
+      }
+}
+@media (max-width: 768px) {
+    .productos {
+        text-align: center;
+        flex-basis: 70%;
+        flex-grow: 1;
+        max-width: 70%;
+      }
+      .opciones {
+        text-align: center;
+        flex-basis: 30%;
+        flex-grow: 1;
+        max-width: 30%;
+        align-content: center;
+      }
+}

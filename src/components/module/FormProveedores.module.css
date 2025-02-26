@@ -1,0 +1,26 @@
+.container {
+    background-color: var(--components-color);
+    box-sizing: border-box;
+    padding: 16px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    width: fit-content;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    margin-bottom: 8px;
+}
+.text {
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+.input {
+    border-radius: 6px;
+    border-color: var(--botton-color);
+    padding: 6px 6px 6px 6px;
+    margin-top: 4px;
+}

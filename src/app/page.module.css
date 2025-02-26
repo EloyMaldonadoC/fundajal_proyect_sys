@@ -1,0 +1,48 @@
+.loadingScreen {
+    box-sizing: border-box;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+.userUI {
+  box-sizing: border-box;
+  padding: 8px;
+  background-color: var(--botton-color);
+  border-radius: 16px;
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  
+}
+.user {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .username {
+    display: none;
+  }
+  .userUI {
+    height: 8vh;
+    margin: 8px 8px 4px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .icon {
+    font-size: 26px;
+  }
+}
+@media (min-width: 768px) {
+  .username {
+    font-size: 16px;
+    color: var(--text-color);
+  }
+  .userUI {
+    margin: 4px 4px 8px 8px;
+  }
+  .icon {
+    font-size: 26px;
+  }
+}

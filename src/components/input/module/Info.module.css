@@ -1,0 +1,18 @@
+.info {
+    background-color: var(--botton-color);
+    width: 100%;
+    height: fit-content;
+    box-sizing: border-box;
+    padding: 16px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.text {
+    font-style: italic;
+    font-weight: bold;
+}
+.botones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+}

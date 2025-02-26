@@ -1,0 +1,28 @@
+.encabezado {
+    box-sizing: border-box;
+    margin-top: 8px;
+    background-color: black;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    color: white;
+    padding: 16px;
+    border-radius: 16px 16px 0px 0px;
+    text-align: center;
+}
+.contenido {
+    box-sizing: border-box;
+    padding: 16px;
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    border-radius: 0px 0px 16px 16px;
+}
+.select {
+    padding: 4px 8px 4px 8px;
+    border-radius: 8px;
+    box-shadow: inset 0px 4px 6px var(--shadow-color),
+              inset 4px -4px 6px var(--shadow-color);
+    outline: none;
+}
+.validar {
+    color: red;
+    border-color: red;
+}

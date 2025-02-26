@@ -1,0 +1,39 @@
+.header {
+    box-sizing: border-box;
+    padding: 16px;
+    background-color: var(--text-color);
+    color: white;
+    border-radius: 16px 16px 0px 0px;
+    text-align: center;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.container {
+    box-sizing: border-box;
+    padding: 16px 16px 4px 16px;
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.fooder {
+    box-sizing: border-box;
+    padding: 8px;
+    border-radius: 0px 0px 16px 16px;
+    background-color: var(--components-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    margin-bottom: 8px;
+}
+.vehiculos {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.select{
+    box-sizing: border-box;
+    border: 2px solid black;
+    border-radius: 12px;
+    padding: 8px 4px 8px 4px;
+}
+.validar {
+    color: var(--candy-apple-red);
+    border-color: var(--candy-apple-red);
+}

@@ -1,0 +1,31 @@
+.container {
+    box-sizing: border-box;
+    width: 100%;
+    height: 150px;
+}
+.loadingScreen {
+    box-sizing: border-box;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .error {
+    box-sizing: border-box;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .textIcon {
+    font-size: 96px;
+    color: var(--botton-color);
+  }
+  .textNoFound {
+    font-size: 22px;
+    color: var(--botton-color);
+  }
+  .textError {
+    font-size: 26px;
+    color: var(--botton-color);
+  }

@@ -1,0 +1,103 @@
+.navegacion {
+  box-sizing: border-box;
+  margin-top: 8px;
+  padding: 16px;
+  border-radius: 16px;
+  background-color: black;
+  color: white;
+  box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.link {
+  text-decoration: none;
+  color: var(--components-color);
+}
+.contenido {
+  box-sizing: border-box;
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px;
+}
+.herramientasContenido {
+  box-sizing: border-box;
+  background-color: var(--botton-color);
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  padding: 8px 16px 8px 16px;
+  
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  margin-top: -8px;
+}
+.herramientas {
+  box-sizing: border-box;
+  padding: 16px;
+  margin-top: 8px;
+  background-color: var(--botton-color);
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .subContenedor1 {
+    flex-basis: calc(65% - 8px);
+    flex-grow: 1;
+    max-width: calc(65% - 8px);
+  }
+  .herramientas {
+    border-radius: 16px 16px 16px 0px;
+  }
+  .herramientasContenido{
+    border-radius: 0px 0px 16px 16px;
+  }
+  .subContenedor2 {
+    flex-basis: calc(35% - 8px);
+    flex-grow: 1;
+    max-width: calc(35% - 8px);
+  }
+}
+@media (max-width: 768px) {
+  .subContenedor1 {
+    flex-basis: 100%;
+    flex-grow: 1;
+    max-width: 100%;
+    order: 2;
+  }
+  .herramientas {
+    border-radius: 16px 16px 16px 16px;
+  }
+  .herramientasContenido{
+    border-radius: 16px 16px 16px 16px;
+  }
+  .subContenedor2 {
+    flex-basis: 100%;
+    flex-grow: 1;
+    max-width: 100%;
+    order: 1;
+  }
+}
+ .input{
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 4px;
+  max-width: 64px;
+  box-shadow: inset 0px 4px 6px var(--shadow-color),
+              inset 4px -4px 6px var(--shadow-color);
+  outline: none;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+ }
+ .scrollable {
+  box-sizing: border-box;
+  max-height: 71vh; /* Ajusta esta altura según tus necesidades */
+  min-height: 80vh; /* Ajusta esta altura según tus necesidades */
+  overflow-y: scroll;
+  scrollbar-width: none; /* Para Firefox */ 
+  -ms-overflow-style: none;
+}

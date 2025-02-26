@@ -13,5 +13,27 @@ export async function GET(request, { params }) {
     return NextResponse.json(result)
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 })
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
+  }
+}
+
+export async function DELETE(request, { params }) {
+  try {
+    const result = await connection.query(
+      "DELETE FROM producto_paquete WHERE pa_id = ?",
+      [params.pa_id]
+    );
+    if (result.affectedRows == 0) {
+      return NextResponse.json(
+        { message: "Productos no encontrados" },
+        { status: 404 }
+      );
+    }
+    return new Response(null, { status: 204 });
+  } catch (error) {
+    return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
   }
 }

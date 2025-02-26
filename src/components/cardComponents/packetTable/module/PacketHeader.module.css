@@ -1,0 +1,23 @@
+.contenedor {
+    box-sizing: border-box;
+    margin-top: 8px;
+    padding-top: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 8px;
+
+    background-color: black;
+    color: white;
+    border-radius: 16px 16px 0px 0px;
+}
+.fila {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .celda {
+      text-align: center;
+    flex-basis: 25%;
+    flex-grow: 1;
+    max-width: 25%;
+  }

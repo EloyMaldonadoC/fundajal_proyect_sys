@@ -1,0 +1,7 @@
+.tabla {
+    box-sizing: border-box;
+    height: fit-content;
+    padding: 16px;
+    margin-top: 8px;
+    margin-right: 4px;
+}

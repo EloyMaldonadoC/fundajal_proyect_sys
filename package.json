@@ -10,10 +10,15 @@
   },
   "dependencies": {
     "@reacticons/ionicons": "^7.1.0",
-    "next": "14.2.5",
+    "axios": "^1.7.3",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "next": "^14.2.5",
+    "next-auth": "^4.24.11",
     "react": "^18",
     "react-dom": "^18",
-    "serverless-mysql": "^1.5.5"
+    "serverless-mysql": "^1.5.5",
+    "swr": "^2.2.5"
   },
   "devDependencies": {
     "eslint": "^8",

@@ -1,0 +1,27 @@
+.container {
+    background-color: var(--components-color);
+    box-sizing: border-box;
+    padding: 16px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    width: 60%;
+    height: fit-content;
+}
+@media (min-width: 768px) {
+    .container {
+        margin-right: 4px;
+    }
+}
+.tContent {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.tTitle {
+    margin-bottom: 8px;
+}
+.tName {
+    text-align: left;
+}
+.tUnits, .tPrice, .tParti {
+    text-align: center;
+}

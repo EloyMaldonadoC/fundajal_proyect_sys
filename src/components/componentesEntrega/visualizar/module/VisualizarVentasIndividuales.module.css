@@ -1,0 +1,86 @@
+.header {
+  box-sizing: border-box;
+  padding: 16px;
+  background-color: var(--text-color);
+  color: white;
+  border-radius: 16px 16px 0px 0px;
+  text-align: center;
+  box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.container {
+  box-sizing: border-box;
+  padding: 8px 16px 8px 16px;
+  background-color: var(--components-color);
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}
+.fooder {
+  box-sizing: border-box;
+  padding: 8px;
+  border-radius: 0px 0px 0px 16px;
+  background-color: var(--components-color);
+  box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.totalPrecio {
+  box-sizing: border-box;
+  width: 45%;
+  padding: 0px 8px 8px 8px;
+  border-radius: 0px 0px 16px 16px;
+  background-color: var(--components-color);
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  margin-bottom: 8px;
+  justify-self: end;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}
+.totalTexto {
+  flex-basis: 50%;
+  flex-grow: 1;
+  max-width: 50%;
+}
+.totalCantidad {
+  flex-basis: 50%;
+  flex-grow: 1;
+  max-width: 50%;
+}
+.titulo {
+  box-sizing: border-box;
+  padding: 0px 16px 16px 8px;
+  background-color: black;
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  color: white;
+  display: flex;
+  flex-wrap: wrap;  
+  text-align: center;
+}
+.texto {
+  box-sizing: border-box;
+  margin-bottom: 4px;
+}
+.nombre {
+  flex-basis: 40%;
+  flex-grow: 1;
+  max-width: 40%;
+}
+.cantidad {
+  flex-basis: 20%;
+  flex-grow: 1;
+  max-width: 20%;
+}
+.precio {
+  flex-basis: 20%;
+  flex-grow: 1;
+  max-width: 20%;
+}
+.total {
+  flex-basis: 20%;
+  flex-grow: 1;
+  max-width: 20%;
+}

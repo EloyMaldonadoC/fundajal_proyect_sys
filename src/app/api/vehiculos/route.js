@@ -7,6 +7,8 @@ export async function GET(request) {
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
   }
 }
 
@@ -70,5 +72,7 @@ export async function POST(request) {
     });
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit() // Cierra la conexión después de finalizar
   }
 }

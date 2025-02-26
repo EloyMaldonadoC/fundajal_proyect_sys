@@ -1,0 +1,83 @@
+.navigationBar {
+    box-sizing: border-box;
+    margin-top: 8px;
+    padding: 16px;
+    border-radius: 16px;
+    background-color: var(--text-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    text-decoration: none;
+    color: var(--components-color);
+}
+
+.link {
+    text-decoration: none;
+    color: var(--components-color);
+}
+.containerProv {
+    min-height: 56px;
+    background-color: var(--components-color);
+    box-sizing: border-box;
+    margin-top: 8px;
+    padding: 16px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.selectProv {
+    background-color: var(--botton-color);
+    box-sizing: border-box;
+    margin-top: 8px;
+    padding: 16px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.select {
+    box-sizing: border-box;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: black;
+    padding: 4px;
+    color: gray;
+}
+.overViewProv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.overViewProduc {
+    min-height: 56px;
+    background-color: var(--components-color);
+    box-sizing: border-box;
+    margin-top: 8px;
+    padding: 16px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.selectProduc {
+    box-sizing: border-box;
+    border-radius: 16px;
+    padding: 16px;
+    background-color: var(--botton-color);
+    margin-top: 8px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.formProduct {
+    box-sizing: border-box;
+    background-color: var(--components-color);
+    margin-top: 8px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    border-radius: 16px;
+    padding: 16px;
+}
+.formComplete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--botton-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    margin-top: 8px;
+    padding: 16px;
+    border-radius: 16px;
+}

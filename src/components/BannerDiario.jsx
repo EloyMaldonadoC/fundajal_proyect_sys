@@ -1,10 +1,9 @@
-import styles from './BannerDiario.module.css';
+import { formatDay, getDayOfWeek } from '@/functions/utilsFormat';
+import styles from './module/BannerDiario.module.css';
 
-export default function BannerDiario({ dia, mes, año }) {
-
-  const fecha = {dia: dia, mes: mes, año: año}
+export default function BannerDiario({ fecha }) {
 
   return (
-    <div className={styles['banner-container']}>{`${fecha.dia} ${fecha.mes} de ${fecha.año}`}</div>
+    <div className={styles['banner-container']}>{getDayOfWeek(fecha)}</div>
   )
 }

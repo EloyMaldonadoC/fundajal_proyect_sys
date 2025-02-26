@@ -1,0 +1,266 @@
+.navegacion {
+    box-sizing: border-box;
+    margin-top: 8px;
+    padding: 16px;
+    border-radius: 16px;
+    background-color: black;
+    color: white;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+  }
+  .link {
+    text-decoration: none;
+    color: var(--components-color);
+  }
+  .herramientas {
+    box-sizing: border-box;
+    margin-top: 8px;
+    padding: 16px;
+    background-color: var(--botton-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .contenido {  
+    box-sizing: border-box;
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .herramientasInfo {
+    box-sizing: border-box;
+    background-color: var(--botton-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    margin-top: -8px;
+  }
+  .icon {
+    font-size: 16px;
+  }
+  .herramientasContenido {
+    box-sizing: border-box;
+    background-color: var(--botton-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    padding: 8px 16px 8px 16px;
+    
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    margin-top: -8px;
+  }
+  .select {
+    box-sizing: border-box;
+    border-radius: 12px;
+    width: fit-content;
+    outline: none;
+    border: none;
+    margin-bottom: 4px;
+    padding-left: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .option {
+    border: none;
+    background-color: #ffffff;
+  }
+  .inputNumberContainer {
+    box-sizing: border-box;
+    border-radius: 12px;
+    background-color: #eeeeee;
+    height: 32px;
+    border: none;
+    outline: none;
+    padding-left: 12px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+  }
+  .inputNumber {
+    box-sizing: border-box;
+    border-radius: 12px;
+    background-color: var(--components-color);
+    height: 32px;
+    border: none;
+    outline: none;
+    padding-left: 12px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+  }
+  @media (min-width: 768px) {
+    .herramientas {
+      border-radius: 16px 16px 0px 0px;
+    }
+    .herramientasInfo {
+      padding: 8px 16px 8px 16px;
+      border-radius: 0px 0px 16px 16px;
+    }
+    .herramientasContenido {
+      border-radius: 0px 0px 16px 16px;
+    }
+    .subContenedor1 {
+      box-sizing: border-box;
+      flex-basis: calc(65% - 8px);
+      flex-grow: 1;
+      max-width: calc(65% - 8px);
+    }
+    .subContenedor2 {
+      box-sizing: border-box;
+      flex-basis: calc(35%);
+      flex-grow: 1;
+      max-width: calc(35%);
+    }
+    .scrollable {
+      box-sizing: border-box;
+      max-height: 69vh; /* Ajusta esta altura según tus necesidades */
+      min-height: 69vh; /* Ajusta esta altura según tus necesidades */
+      overflow-y: scroll;
+      scrollbar-width: none; /* Para Firefox */ 
+      -ms-overflow-style: none;
+    }
+    .scrollablePagos {
+      box-sizing: border-box;
+      max-height: 60vh; /* Ajusta esta altura según tus necesidades */
+      min-height: 60vh; /* Ajusta esta altura según tus necesidades */
+      overflow-y: scroll;
+      scrollbar-width: none; /* Para Firefox */ 
+      -ms-overflow-style: none;
+    }
+  }
+  @media (max-width: 768px) {
+    .herramientas {
+      border-radius: 16px 16px 0px 0px;
+    }
+    .herramientasInfo {
+      border-radius: 0px 0px 16px 16px;
+      padding: 0px 16px 8px 16px;
+    }
+    .herramientasContenido {
+      border-radius: 16px 16px 16px 16px;
+    }
+    .subContenedor1 {
+      box-sizing: border-box;
+      flex-basis: 100%;
+      flex-grow: 1;
+      max-width: 100%;
+      order: 2;
+    }
+    .subContenedor2 {
+      box-sizing: border-box;
+      flex-basis: 100%;
+      flex-grow: 1;
+      max-width: 100%;
+      order: 1;
+    }
+  }
+  .loadingScreen {
+    box-sizing: border-box;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .error {
+    box-sizing: border-box;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .textIcon {
+    font-size: 96px;
+    color: var(--botton-color);
+  }
+  .textNoFound {
+    font-size: 22px;
+    color: var(--botton-color);
+  }
+  .textError {
+    font-size: 26px;
+    color: var(--botton-color);
+  }
+  .errorContent {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .menuPagos {
+    box-sizing: border-box;
+    padding: 8px 8px 8px 16px;
+    background-color: var(--botton-color);
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    border-radius: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .formulario {
+    box-sizing: border-box;
+    width: 100%;
+    padding-bottom: 8px;
+    padding-right: 8px;
+  }
+  .input {
+    box-sizing: border-box;
+    border: none;
+    border-radius: 12px;
+    padding-left: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 8px;
+    width: 78px;
+    outline: none;
+    margin-bottom: 4px;
+  }
+  .input {
+    box-sizing: border-box;
+    border: none;
+    border-radius: 12px;
+    padding-left: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 8px;
+    width: 78px;
+    outline: none;
+    margin-right: 8px;
+    margin-bottom: 4px;
+  }
+  .date {
+    box-sizing: border-box;
+    border: none;
+    border-radius: 12px;
+    padding-left: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 8px;
+    margin-right: 8px;
+    outline: none;
+    margin-bottom: 4px;
+  }
+  .sectionTextarea {
+    box-sizing: border-box;
+    margin-top: 8px;
+  }
+  .textarea {
+    box-sizing: border-box;
+    width: 100%;
+    height: 62px;
+    border-radius: 12px;
+    border: none;
+    margin-top: 4px;
+    outline: none;
+  }

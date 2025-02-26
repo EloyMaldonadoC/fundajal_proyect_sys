@@ -1,0 +1,9 @@
+.container {
+    box-sizing: border-box;
+    background-color: var(--components-color);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    width: 100%;
+    margin-bottom: 8px;
+}

@@ -1,0 +1,19 @@
+.container {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.date {
+    box-sizing: border-box;
+    padding: 2px 6px 2px 6px;
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    color: #00000085;
+    box-shadow: inset 0px 4px 6px var(--shadow-color),
+              inset 4px -4px 6px var(--shadow-color);
+}
+.validation {
+    color: red;
+    border-color: red;
+}

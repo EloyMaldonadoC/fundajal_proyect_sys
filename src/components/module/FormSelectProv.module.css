@@ -1,0 +1,31 @@
+.container {
+    box-sizing: border-box;
+    padding: 16px;
+    margin-top: 8px;
+
+    background-color: var(--components-color);
+    border-radius: 16px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+}
+
+.select {
+    padding-top: 8px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-bottom: 8px;
+
+    margin-right: 16px;
+
+    border-radius: 12px;
+    border-style: none;
+
+    box-shadow: inset 0px -4px 6px var(--shadow-color),
+                inset 0px 4px 6px var(--shadow-color);
+}
+.select:focus {
+    outline: none;
+}
+.loadContainer {
+    display: flex;
+    justify-content: center;
+}

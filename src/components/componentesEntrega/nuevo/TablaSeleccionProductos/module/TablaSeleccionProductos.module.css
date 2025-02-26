@@ -1,0 +1,77 @@
+.validar {
+  border: 2px solid red;
+  border-radius: 16px;
+}
+.title {
+  box-sizing: border-box;
+  padding: 8px 16px 16px 16px;
+  background-color: black;
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.containerNav {
+  box-sizing: border-box;
+  padding: 16px 16px 8px 16px;
+  background-color: var(--text-color);
+  border-radius: 16px 16px 0px 0px;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.container {
+  box-sizing: border-box;
+  padding: 8px 16px 8px 16px;
+  background-color: var(--components-color);
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  align-items: center;
+}
+.nombre {
+  flex-basis: 33%;
+  flex-grow: 1;
+  max-width: 33%;
+}
+.precio {
+  flex-basis: 33%;
+  flex-grow: 1;
+  max-width: 33%;
+}
+.cantidad {
+  flex-basis: 33%;
+  flex-grow: 1;
+  max-width: 33%;
+}
+.button {
+  box-sizing: border-box;
+  border: none;
+  border-radius: 100%;
+  margin: 8px 2px 0px 2px;
+  padding: 8px 12px 8px 12px;
+  box-shadow: 0px 4px 6px var(--shadow-color);
+}
+.button:active {
+  transform: scale(0.95);
+}
+.disabled {
+  background-color: var(--botton-color);
+}
+.enabled {
+  background-color: black;
+  color: white;
+}
+.footer {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 12px;
+  border-radius: 0px 0px 16px 16px;
+  background-color: var(--components-color);
+  box-shadow: 0px 4px 6px var(--shadow-color);
+}
