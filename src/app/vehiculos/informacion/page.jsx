@@ -9,19 +9,17 @@ import { Button, Input, Select } from "@/components/input/InputComponents";
 import { DatePick } from "@/components/calendarComponents/CalendarComponents";
 import Servicios from "@/components/cardComponents/Servicios";
 import { useSession } from "next-auth/react";
+import IonIcon from "@reacticons/ionicons";
 
 function SelectEstado({ data, onSelect, validar, text, value }) {
-
   const [valor, setValor] = useState("Optimo");
 
   useEffect(() => {
     if (value == "Optimo") {
       setValor("Optimo");
-    }
-    else if (value == "Revisión") {
+    } else if (value == "Revisión") {
       setValor("Revisión");
-    }
-    else if (value == "Fuera de Servicio") {
+    } else if (value == "Fuera de Servicio") {
       setValor("Fuera de Servicio");
     }
   }, [value]);
@@ -31,7 +29,7 @@ function SelectEstado({ data, onSelect, validar, text, value }) {
       <p>{text}</p>
       <select
         value={valor}
-        className={`${styles.selectVe} ${validar ? styles.validarVe : ''}`}
+        className={`${styles.selectVe} ${validar ? styles.validarVe : ""}`}
         onChange={(e) => onSelect(e.target.value)}
         style={{ borderColor: validar ? "red" : "" }}
       >
@@ -54,7 +52,7 @@ function InfoVehiculo() {
   const [edicion, setEdicion] = useState(false);
   const [editarObservaciones, setEditarObservaciones] = useState(false);
   const [editarSeguro, setEditarSeguro] = useState(false);
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   const [nuevaObservacion, setNuevaObservacion] = useState("");
@@ -100,7 +98,7 @@ function InfoVehiculo() {
           setVePlacas(data.ve_placas);
           setVeEstado(data.ve_estatus_gen);
           setNuevaObservacion(data.ve_observaciones);
-          console.log(data);
+          setLoading(false);
         })
         .catch((error) => {
           setError(error);
@@ -118,7 +116,6 @@ function InfoVehiculo() {
           data ? setNuevoNombreSeguro(data.segu_nombre) : "";
           data ? setNuevoMontoSeguro(data.segu_monto_pago) : "";
           data ? setNuevaVigenciaSeguro(ajsutarFecha(data.segu_vigencia)) : "";
-          console.log(data);
         })
         .catch((error) => {
           setError(error);
@@ -255,8 +252,24 @@ function InfoVehiculo() {
     }
   };
 
-  if (loading) return <LoadingScreen />;
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading)
+    return (
+      <div className={styles.loadingScreen}>
+        <LoadingScreen />
+      </div>
+    );
+  if (error)
+    return (
+      <div className={styles.error}>
+        <div className={styles.errorContent}>
+          <IonIcon
+            className={styles.textIcon}
+            name="cloud-offline-outline"
+          ></IonIcon>
+          <p className={styles.textError}>No hay Conexión</p>
+        </div>
+      </div>
+    );
 
   return (
     <div>
@@ -467,7 +480,11 @@ function InfoVehiculo() {
                         validation={validarVePlacas}
                       />
                       <SelectEstado
-                        data={[{id: 1, nombre: 'Optimo'}, {id: 2,nombre: 'Revisión'}, {id: 3, nombre: 'Fuera de Servicio'}]}
+                        data={[
+                          { id: 1, nombre: "Optimo" },
+                          { id: 2, nombre: "Revisión" },
+                          { id: 3, nombre: "Fuera de Servicio" },
+                        ]}
                         onSelect={(e) => setVeEstado(e)}
                         validar={veEstadoValidar}
                         text={"Estado: "}

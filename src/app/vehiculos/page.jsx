@@ -92,7 +92,7 @@ function Vehiculos() {
         <LoadingScreen />
       </div>
     );
-  if (error)
+if (error)
     return (
       <div className={styles.error}>
         <div className={styles.errorContent}>
@@ -100,10 +100,11 @@ function Vehiculos() {
             className={styles.textIcon}
             name="cloud-offline-outline"
           ></IonIcon>
-          <p className={styles.textError}>{error.message}</p>
+          <p className={styles.textError}>No hay Conexión</p>
         </div>
       </div>
     );
+    
   return (
     <div>
       <div className={styles.navegacion}>
