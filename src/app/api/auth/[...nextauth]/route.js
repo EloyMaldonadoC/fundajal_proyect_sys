@@ -15,6 +15,7 @@ const options = {
           credentials.username,
           credentials.password
         );
+        console.log(user);
         if (user) {
           return { 
             id: user.id,
@@ -60,7 +61,7 @@ const options = {
     },
   },
   jwt: {
-    secret: process.env.SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
   },
   pages: {
     signIn: "/iniciar-sesion",

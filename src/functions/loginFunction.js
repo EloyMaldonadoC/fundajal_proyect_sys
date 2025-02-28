@@ -13,7 +13,6 @@ export async function hashPassword(password) {
 }
 
 export async function verifyPassword(username, password) {
-
   try {
     console.log("usuario", username);
     console.log("contraseña", password);
