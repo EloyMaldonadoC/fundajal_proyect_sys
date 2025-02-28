@@ -10,7 +10,5 @@ export async function GET() {
     return NextResponse.json(result[0]);
   } catch (error) {
     return NextResponse.error({ message: error.message }, { status: 500 });
-  } finally {
-    connection.quit();
   }
 }

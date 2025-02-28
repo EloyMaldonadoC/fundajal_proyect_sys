@@ -19,7 +19,5 @@ export async function GET(request, { params }) {
         status: 500,
       }
     );
-  } finally {
-    connection.quit(); // Cierra la conexión después de finalizar
   }
 }

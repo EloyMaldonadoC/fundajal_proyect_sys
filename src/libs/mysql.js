@@ -31,10 +31,7 @@ export async function getStoredPassword(username) {
     return results[0].emp_contraseña;
   } catch (error) {
     console.error(error);
-  } finally {
-    connection.quit();
   }
-  
 }
 
 export async function getStoredUser(username) {
@@ -46,18 +43,7 @@ export async function getStoredUser(username) {
       return null;
     }
     return results[0];
-    
-    return new Promise((resolve, reject) => {
-      const query = "SELECT emp_id, emp_nombre, emp_apellido, emp_num_tel, emp_rol, emp_estado, emp_hora_entrada, emp_hora_salida, emp_foto, emp_usuario FROM empleados WHERE emp_usuario = ?";
-      connection.query(query, [username], (error, results) => {
-        if (error) return reject(error);
-        if (results.length === 0) return reject(new Error("User not found"));
-        resolve(results[0]);
-      });
-    }); 
   } catch (error) {
     console.error(error);
-  } finally {
-    connection.quit();
   }
 }

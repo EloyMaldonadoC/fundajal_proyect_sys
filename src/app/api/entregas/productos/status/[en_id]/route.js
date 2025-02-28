@@ -3,16 +3,14 @@ import { connection } from "@/libs/mysql";
 
 export async function GET(request, { params }) {
   const sql = `SELECT entrega_estado_producto.*, productos.* 
-FROM entrega_estado_producto
-JOIN productos ON entrega_estado_producto.produc_id = productos.produc_id
-WHERE entrega_estado_producto.en_id = ?;`;
+            FROM entrega_estado_producto
+            JOIN productos ON entrega_estado_producto.produc_id = productos.produc_id
+            WHERE entrega_estado_producto.en_id = ?;`;
   try {
     const result = await connection.query(sql, [params.en_id]);
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
-  } finally {
-    connection.quit() // Cierra la conexión después de finalizar
   }
 }
 
@@ -31,7 +29,5 @@ export async function DELETE(request, { params }) {
     return new Response(null, { status: 204 });
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
-  } finally {
-    connection.quit() // Cierra la conexión después de finalizar
   }
 }
