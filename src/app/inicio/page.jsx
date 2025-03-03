@@ -78,7 +78,7 @@ function Inicio() {
           setLoading(false);
         });
     }
-    if (session.user.role != "Encargado" && session.user.role != "Administrador") {
+    if (session.user.role != "Encargado" && session.user.role != "Administrador" && session.user.role != 'Oficina') {
       fetch(`/api/entregas/cardEntregas/filtrarEmpleado?&page=${page}&limit=${limit}&user=${session.user.id}`)
         .then((res) => {
           if (!res.ok) {
@@ -100,25 +100,27 @@ function Inicio() {
   }, [page]);
 
   useEffect(() => {
-    const restruccurarDatos = () => {
-      //recorre la lista de entregas
-      const nuevaLista = [];
-      for (let x = 0; x < entregas.length;) {
-        const dia = entregas[x].entrega.en_dia_entrega;
-        const datos = [];
-        for (let y = 0; y < entregas.length; y++) {
-          const entrega = entregas[y];
-          if (entrega.entrega.en_dia_entrega === dia) {
-            datos.push(entrega);
+    if (entregas.length != 0) {
+      const restruccurarDatos = () => {
+        //recorre la lista de entregas
+        const nuevaLista = [];
+        for (let x = 0; x < entregas.length;) {
+          const dia = entregas[x].entrega.en_dia_entrega;
+          const datos = [];
+          for (let y = 0; y < entregas.length; y++) {
+            const entrega = entregas[y];
+            if (entrega.entrega.en_dia_entrega === dia) {
+              datos.push(entrega);
+            }
           }
+          nuevaLista.push(datos);
+          x += datos.length;
         }
-        nuevaLista.push(datos);
-        x += datos.length;
-      }
-      return nuevaLista;
-    };
-    const lista = restruccurarDatos();
-    setDatosReestructurados(lista);
+        return nuevaLista;
+      };
+      const lista = restruccurarDatos();
+      setDatosReestructurados(lista);
+    }
   }, [entregas]);
 
   //Saber si el scroll llega al final de la página
