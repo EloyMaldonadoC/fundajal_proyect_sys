@@ -46,7 +46,7 @@ export default function Entregas() {
     console.log("se renderiza");
     if (
       session.user.role === "Administrador" ||
-      session.user.role === "Encargado"
+      session.user.role === "Encargado" || session.user.role === 'Oficina'
     ) {
       fetch(
         `/api/entregas/cardEntregas?page=${

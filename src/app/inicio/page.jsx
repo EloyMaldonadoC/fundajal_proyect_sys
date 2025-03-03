@@ -19,8 +19,6 @@ function Inicio() {
   const [diaGuardado, setDiaGuardado] = useState(null);
   const [datosReestructurados, setDatosReestructurados] = useState([]);
 
-  
-
   useEffect(() => {
     if (
       session.user.role != "Administrador" &&
@@ -42,7 +40,7 @@ function Inicio() {
           setLoading(false);
         });
     }
-    if (session.user.role === "Administrador") {
+    if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
       fetch(`/api/entregas/cardEntregas/filtrarEmpleado?&page=${page}&limit=${limit}&access=Admin`)
         .then((res) => {
           if (!res.ok) {

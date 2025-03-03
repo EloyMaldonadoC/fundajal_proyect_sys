@@ -48,19 +48,19 @@ export default function Home({ children }) {
                       {(session.user.role === 'Administrador' || session.user.role === 'Encargado') && (
                         <li><button onClick={() => { router.push('/entregas') }}><p>Entregas</p><IonIcon name="calendar" size="medium"/></button></li>
                       )}
-                      {(session.user.role === 'Administrador') && (
+                      {(session.user.role === 'Administrador' || session.user.role === 'Oficina') && (
                         <li><button onClick={() => { router.push('/inventario') }}><p>Inventario</p><IonIcon name="server" size="medium"/></button></li>
                       )}
-                      {(session.user.role === 'Administrador') && (
+                      {(session.user.role === 'Administrador' || session.user.role === 'Oficina') && (
                         <li><button onClick={() => { router.push('/paquetes') }}><p>Paquetes</p><IonIcon name="cube" size="medium"/></button></li>
                       )}
-                      {(session.user.role === 'Administrador') && (
+                      {(session.user.role === 'Administrador' || session.user.role === 'Oficina') && (
                         <li><button onClick={() => { router.push('/vehiculos') }}><p>Vehiculos</p><IonIcon name="car" size="medium"/></button></li>
                       )}
-                      {(session.user.role === 'Administrador') && (
+                      {(session.user.role === 'Administrador' || session.user.role === 'Oficina') && (
                         <li><button onClick={() => { router.push('/empleados') }}><p>Empleados</p><IonIcon name="person" size="medium"/></button></li>
                       )}
-                      {(session.user.role === 'Administrador') && (
+                      {(session.user.role === 'Administrador' || session.user.role === 'Oficina') && (
                         <li><button onClick={() => { router.push('/historial') }}><p>Historial</p><IonIcon name="stats-chart" size="medium"/></button></li>
                       )}
                     </ul>

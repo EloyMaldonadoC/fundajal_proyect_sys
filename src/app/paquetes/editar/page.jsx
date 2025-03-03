@@ -78,7 +78,7 @@ function EditarPaquete() {
   const [listaProductos, setListaProductos] = useState([]);
 
   useEffect(() => {
-    if (session.user.role === "Administrador") {
+    if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
       fetch(`/api/paquetes/${id}`)
       .then((response) => {
         if (!response.ok) {

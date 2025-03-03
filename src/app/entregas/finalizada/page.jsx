@@ -86,7 +86,7 @@ function Finalizada() {
 
   //Busca informacion de la entrega
   useEffect(() => {
-    if (session.user.role === "Administrador" || session.user.role === "Encargado") {
+    if (session.user.role === "Administrador" || session.user.role === "Encargado" || session.user.role === 'Oficina') {
       fetch(`/api/entregas/obtener/entrega/${id}`)
       .then((response) => {
         if (!response.ok) {

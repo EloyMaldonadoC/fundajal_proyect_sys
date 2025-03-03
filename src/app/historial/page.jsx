@@ -37,7 +37,7 @@ function Historial() {
   };
 
   useEffect(() => {
-    if (session.user.role === "Administrador") {
+    if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
       if (verEntregas) {
         fetch(
           `/api/historial/entregas?page=${page + 1}&limit=${limit}${

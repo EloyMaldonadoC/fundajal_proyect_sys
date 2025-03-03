@@ -64,7 +64,7 @@ function NuevaEntrega() {
   };
 
   useEffect(() => {
-    if (session.user.role === "Administrador" || session.user.role === "Encargado") {
+    if (session.user.role === "Administrador" || session.user.role === "Encargado" || session.user.role === 'Oficina') {
       generateNewID();
     fetch("/api/datetime/date")
       .then((response) => {

@@ -24,7 +24,7 @@ function Empleados() {
   const data2 = [{id: 1, nombre: 'disponible'}, {id: 2, nombre: 'ocupado'},]
 
   useEffect(() => {
-    if (session.user.role === 'Administrador') {
+    if (session.user.role === 'Administrador' || session.user.role === 'Oficina') {
       fetch("/api/empleados")
       .then((response) => {
         if (!response.ok) {

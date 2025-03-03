@@ -19,7 +19,7 @@ function Inventario() {
   const [proveedor, setProveedor] = useState(null);
 
   useEffect(() => {
-    if (session.user.role === "Administrador") {
+    if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
       fetch(`/api/productos`)
       .then((respose) => {
         if (!respose.ok) {

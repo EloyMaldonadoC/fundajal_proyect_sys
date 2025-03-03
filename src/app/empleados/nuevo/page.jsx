@@ -34,7 +34,7 @@ function NuevoEmpleado() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    if (session.user.role !== "Administrador") {
+    if (session.user.role !== "Administrador" || session.user.role === 'Oficina') {
       routes.push("/");
     }
   }, [session, routes]);

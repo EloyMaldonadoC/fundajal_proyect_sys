@@ -78,7 +78,7 @@ function Entrega() {
         .then((data) => {
           if (
             session.user.role === "Administrador" ||
-            data.emp_id === session.user.id
+            data.emp_id === session.user.id || session.user.role === 'Oficina'
           ) {
             setEntrega(data);
             setEncargado(data.emp_id);

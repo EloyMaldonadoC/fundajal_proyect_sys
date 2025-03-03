@@ -14,7 +14,7 @@ function Paquetes() {
   const [buscar, setBuscar] = useState("");
 
   useEffect(() => {
-    if (session.user.role != 'Administrador') {
+    if (session.user.role != 'Administrador' || session.user.role === 'Oficina') {
       router.push('/');
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -25,7 +25,7 @@ function Vehiculos() {
   const [vehiculos, setVehiculos] = useState([]);
 
   useEffect(() => {
-    if (session.user.role === "Administrador") {
+    if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
       fetch("/api/vehiculos")
         .then((response) => {
           if (!response.ok) {

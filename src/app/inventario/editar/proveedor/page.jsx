@@ -32,7 +32,7 @@ function EditarProveedor() {
   const [verificarRfc, setVerificarRfc] = useState(false);
 
   useEffect(() => {
-    if (session.user.role === "Administrador") {
+    if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
       fetch(`/api/proveedores/${id}`)
       .then((response) => {
         if (!response.ok) {

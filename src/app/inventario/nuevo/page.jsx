@@ -59,7 +59,7 @@ function NewProduct() {
   const [showModalFinaly, setShowModalFinaly] = useState(false);
 
   useEffect(() => {
-    if (session.user.role === "Administrador") {
+    if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
       fetch(`/api/proveedores`)
         .then((respose) => {
           if (!respose.ok) {

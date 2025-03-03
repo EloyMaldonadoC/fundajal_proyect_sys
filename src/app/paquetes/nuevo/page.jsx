@@ -71,7 +71,7 @@ function NuevoPaquete() {
   const [listaProductos, setListaProductos] = useState([]);
 
   useEffect(() => {
-    if (session.user.role === "Administrador") {
+    if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
       fetch("/api/productos")
         .then((response) => {
           if (!response.ok) {

@@ -37,7 +37,7 @@ function EditarEmpleado() {
   const [validarEstado, setValidarEstado] = useState(false);
 
   useEffect(() => {
-    if (session.user.role === "Administrador") {
+    if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
       fetch(`/api/empleados/${id}`)
         .then((response) => {
           if (!response.ok) {

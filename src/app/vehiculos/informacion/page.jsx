@@ -81,7 +81,7 @@ function InfoVehiculo() {
   const [vehiculo, setVehiculo] = useState(null);
 
   useEffect(() => {
-    if (session.user.role === "Administrador") {
+    if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
       fetch(`/api/vehiculos/${id}`)
         .then((response) => {
           if (!response.ok) {

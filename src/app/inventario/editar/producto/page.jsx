@@ -28,7 +28,7 @@ function EditarProducto() {
   const [verificarPartiEnlace, setVerificarPartiEnlace] = useState(false);
 
   useEffect(() => {
-    if (session.user.role === "Administrador") {
+    if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
       fetch(`/api/productos/${id}`)
       .then((response) => {
         if (!response.ok) {
