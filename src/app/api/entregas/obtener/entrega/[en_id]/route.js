@@ -51,5 +51,7 @@ export async function GET(req, { params }) {
     return NextResponse.json(data[0]);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit();
   }
 }

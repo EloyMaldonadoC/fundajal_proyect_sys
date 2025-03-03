@@ -18,6 +18,8 @@ export async function GET(request, { params }) {
     return NextResponse.json(result[0]);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit();
   }
 }
 
@@ -46,6 +48,8 @@ export async function PUT(request, { params }) {
     return NextResponse.json(updatedProduct[0]);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit();
   }
 }
 

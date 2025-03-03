@@ -12,6 +12,8 @@ export async function GET(request, { params }) {
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit();
   }
 }
 
@@ -34,5 +36,7 @@ export async function DELETE(request, { params }) {
     }
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit();
   }
 }

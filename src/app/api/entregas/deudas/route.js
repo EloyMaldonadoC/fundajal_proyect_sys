@@ -21,5 +21,7 @@ export async function POST(request) {
     return NextResponse.json({ en_id, deu_abono, deu_estado, deu_deuda, deu_deuda_pendiente, deu_comision_funjal, deu_comision_enlace }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit();
   }
 }

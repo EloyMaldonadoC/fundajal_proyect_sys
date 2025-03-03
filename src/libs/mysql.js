@@ -31,6 +31,8 @@ export async function getStoredPassword(username) {
     return results[0].emp_contraseña;
   } catch (error) {
     console.error(error);
+  } finally {
+    connection.quit();
   }
 }
 
@@ -45,5 +47,7 @@ export async function getStoredUser(username) {
     return results[0];
   } catch (error) {
     console.error(error);
+  } finally {
+    connection.quit();
   }
 }

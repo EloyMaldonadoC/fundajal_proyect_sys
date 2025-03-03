@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { connection } from "@/libs/mysql";
-import { use } from "react";
 
 export async function GET(req) {
   try {
@@ -148,5 +147,7 @@ export async function GET(req) {
     }
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit();
   }
 }

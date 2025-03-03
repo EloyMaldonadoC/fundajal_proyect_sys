@@ -14,6 +14,8 @@ export async function GET() {
         status: 500,
       }
     );
+  } finally {
+    connection.quit();
   }
 } 
 
@@ -57,5 +59,7 @@ export async function POST(request) {
         status: 500,
       }
     );
+  } finally {
+    connection.quit();
   }
 }

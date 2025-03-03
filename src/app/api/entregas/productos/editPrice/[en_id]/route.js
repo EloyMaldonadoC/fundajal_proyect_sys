@@ -39,5 +39,7 @@ export async function PUT(request, { params }) {
         status: 500,
       }
     );
+  } finally {
+    connection.quit();
   }
 }

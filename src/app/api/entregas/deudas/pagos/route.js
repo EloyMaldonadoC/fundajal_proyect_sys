@@ -8,6 +8,8 @@ export async function GET(request) {
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit();
   }
 }
 export async function POST(request) {
@@ -26,5 +28,7 @@ export async function POST(request) {
     return NextResponse.json({ deu_id, pag_monto, pag_desc, pag_metodo, pag_desc, pag_fecha_transac });
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit();
   }
 }

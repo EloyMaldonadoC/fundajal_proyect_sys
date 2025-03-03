@@ -11,6 +11,8 @@ export async function GET(request) {
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit();
   }
 }
 export async function POST(request) {
@@ -31,6 +33,8 @@ export async function POST(request) {
     return NextResponse.json("Productos agregados");
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit();
   }
 }
  

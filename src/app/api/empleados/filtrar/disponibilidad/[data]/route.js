@@ -21,5 +21,7 @@ export async function GET(request, { params }) {
         status: 500,
       }
     );
+  } finally {
+    connection.quit();
   }
 }

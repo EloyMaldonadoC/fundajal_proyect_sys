@@ -36,5 +36,7 @@ export async function GET(request) {
         status: 500,
       }
     );
+  } finally {
+    connection.quit();
   }
 }

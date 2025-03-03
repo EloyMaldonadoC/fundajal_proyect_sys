@@ -34,5 +34,7 @@ export async function POST(request) {
     return NextResponse.json({ produc_id, hist_estado, hist_cantidad, hist_precio_ent_sal, hist_hora, hist_dia, hist_motivo }, { status: 201});
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit();
   }
 }

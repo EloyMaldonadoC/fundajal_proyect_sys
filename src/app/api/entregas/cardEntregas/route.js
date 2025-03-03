@@ -36,5 +36,7 @@ export async function GET(req) {
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
+  } finally {
+    connection.quit();
   }
 }
