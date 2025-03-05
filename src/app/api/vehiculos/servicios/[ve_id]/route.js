@@ -3,9 +3,10 @@ import { connection } from "@/libs/mysql";
 
 export async function GET(request, { params }) {
   try {
+    const { ve_id } = await params;
     const result = await connection.query(
       "SELECT * FROM servicios WHERE ve_id = ?;",
-      [params.ve_id]
+      [ve_id]
     );
 
     if (result.length == 0) {

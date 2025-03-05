@@ -25,7 +25,10 @@ function Vehiculos() {
   const [vehiculos, setVehiculos] = useState([]);
 
   useEffect(() => {
-    if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
+    if (
+      session.user.role === "Administrador" ||
+      session.user.role === "Oficina"
+    ) {
       fetch("/api/vehiculos")
         .then((response) => {
           if (!response.ok) {
@@ -92,7 +95,7 @@ function Vehiculos() {
         <LoadingScreen />
       </div>
     );
-if (error)
+  if (error)
     return (
       <div className={styles.error}>
         <div className={styles.errorContent}>
@@ -104,7 +107,7 @@ if (error)
         </div>
       </div>
     );
-    
+
   return (
     <div>
       <div className={styles.navegacion}>

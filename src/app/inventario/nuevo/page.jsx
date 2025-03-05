@@ -8,6 +8,7 @@ import { Button, Input, Modal } from "@/components/input/InputComponents";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { obtenerHoraActual } from "@/functions/utilsFormat";
+import LoadingData from "@/components/LoadingData";
 
 const generateID = () => {
   return Math.floor(1000000 + Math.random() * 90000000);
@@ -18,6 +19,7 @@ function NewProduct() {
   const router = useRouter();
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState("");
+  const [loadingData, setLoadingData] = useState(false);
   //vista
   const [verProveedor, setVerProveedor] = useState(true);
   const [verProducto, setVerProducto] = useState(false);
@@ -193,6 +195,7 @@ function NewProduct() {
     }
   };
   const finalizarRegistro = async () => {
+    setLoadingData(true);
     //Agregar proveedor
     if (!existeProveedor) {
       const proveedor = {
@@ -596,6 +599,7 @@ function NewProduct() {
           finalizarRegistro();
         }}
       />
+      <LoadingData show={loadingData} />
     </div>
   );
 }

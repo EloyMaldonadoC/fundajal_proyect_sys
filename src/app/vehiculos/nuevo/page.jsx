@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import styles from './page.module.css'
 import { Input, Button, Select, Modal } from '@/components/input/InputComponents';
 import { useSession } from 'next-auth/react';
+import LoadingData from '@/components/LoadingData';
 
 function NuevoVehiculo() {
   const { data: session } = useSession();
@@ -14,6 +15,7 @@ function NuevoVehiculo() {
   const [validarMarca, setValidarMarca] = useState(false);
   const [modelo, setModelo] = useState('');
   const [validarModelo, setValidarModelo] = useState(false);
+  const [loadingData, setLoadingData] = useState(false);
   const año = [{ id: 1, nombre: 2025 },
     { id: 2, nombre: 2024 },
     { id: 3, nombre: 2023 },
@@ -133,6 +135,7 @@ function NuevoVehiculo() {
   }, [router])
 
   const handlePressAceptar = () => {
+    setLoadingData(true);
     const data = {
       ve_marca: marca,
       ve_modelo : modelo,
@@ -233,7 +236,7 @@ function NuevoVehiculo() {
           <Select data={entidad} text={'Entidad: '} onSelect={(data) => {setEntidadEscogida(data)}} validar={validarEntidad}/>
         </div>
         <Input placeholder={'Número de Placa'} value={placa} onChange={(placa) => {setPlaca(placa)}} validation={validarPlaca} type={'text'}/>
-        <Input placeholder={'Nombre del Propietario'} value={propietario} onChange={(propietario) => {setPropietario(propietario)}} validation={validarPropietario} type={'text'}/>
+        <Input placeholder={'Nombre del Encargado'} value={propietario} onChange={(propietario) => {setPropietario(propietario)}} validation={validarPropietario} type={'text'}/>
         <div className={styles.select}>
           <Select data={estado} text={'Estado General: '} onSelect={(data) => {setEstadoEscogido(data)}} validar={validarEstado}/>
         </div>
@@ -244,6 +247,7 @@ function NuevoVehiculo() {
         </div>
       </div>
       <Modal title={'Agregar Vehiculo'} message={'¿Quieres agregar el nuevo vehiculo con los datos proporcionados?'} show={showModal} handleClose={() => {setShowModal(false)}} handleAccept={handlePressAceptar}/>
+      <LoadingData show={loadingData}/>
     </div>
   )
 }

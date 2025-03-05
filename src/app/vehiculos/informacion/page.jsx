@@ -415,7 +415,7 @@ function InfoVehiculo() {
                     {veCapacidad} Kg
                   </p>
                   <p className={styles.separacion}>
-                    <span className={styles.text}>Propietario: </span>
+                    <span className={styles.text}>Encargado: </span>
                     {vePropietario}
                   </p>
                   <p className={styles.separacion}>
@@ -453,7 +453,7 @@ function InfoVehiculo() {
                         validation={validarVeCapacidad}
                       />
                       <Input
-                        placeholder={"Propietarios"}
+                        placeholder={"Encargado"}
                         type={"text"}
                         value={vePropietario}
                         onChange={(propietario) => {

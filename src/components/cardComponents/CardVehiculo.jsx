@@ -26,7 +26,7 @@ function CardVehiculo({ vehiculo }) {
       <div className={styles.datos}>
         <p className={styles.text}>Agencia: {vehiculo.ve_agencia}</p>
         <p className={styles.text}>Capacidad: {vehiculo.ve_capacidad} Kg</p>
-        <p className={styles.text}>Propietario: {vehiculo.ve_propietario}</p>
+        <p className={styles.text}>Encargado: {vehiculo.ve_propietario}</p>
         <p className={styles.text}>Entidad: {vehiculo.ve_entidad}</p>
         <p className={styles.text}>Placas: {vehiculo.ve_placas}</p>
         <div className={styles.status}>
