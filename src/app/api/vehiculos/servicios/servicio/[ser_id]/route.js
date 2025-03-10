@@ -3,9 +3,10 @@ import { connection } from "@/libs/mysql";
 
 export async function GET(request, { params }) {
   try {
+    const { ser_id } = await params;
     const result = await connection.query(
       "SELECT * FROM servicios WHERE ser_id = ?;",
-      [params.ser_id]
+      [ser_id]
     );
 
     if (result.length == 0) {
@@ -24,11 +25,12 @@ export async function GET(request, { params }) {
 
 export async function PUT(request, { params }) {
   try {
+    const { ser_id } = await params;
     const data = await request.json();
     console.log(data);
     const result = await connection.query(
       "UPDATE servicios SET ? WHERE ser_id = ?",
-      [data, params.ser_id]
+      [data, ser_id]
     );
 
     if (result.affectedRows == 0) {
@@ -40,7 +42,7 @@ export async function PUT(request, { params }) {
 
     const updatedProduct = await connection.query(
       "SELECT * FROM servicios WHERE ser_id = ?",
-      [params.ser_id]
+      [ser_id]
     );
     return NextResponse.json(updatedProduct);
   } catch (error) {

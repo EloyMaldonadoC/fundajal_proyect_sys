@@ -63,11 +63,11 @@ function EditarProducto() {
       setVerificarPrecio(true);
       return
     }
-    if(participacionFunda <= 0 || participacionFunda == '') {
+    if(participacionFunda < 0 || participacionFunda == '') {
       setVerificarPartiFun(true);
       return
     }
-    if(participacionEnlace <= 0 || participacionEnlace == '') {
+    if(participacionEnlace < 0 || participacionEnlace == '') {
       setParticipacionEnlace(true);
       return
     }

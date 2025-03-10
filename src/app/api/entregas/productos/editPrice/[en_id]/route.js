@@ -3,13 +3,14 @@ import { connection } from "@/libs/mysql";
 
 export async function PUT(request, { params }) {
   try {
+    const { en_id } = await params;
     const query = `SELECT entrega_estado_producto.*, productos.*, entrega_producto.en_produc_precio
     FROM productos
     JOIN entrega_producto ON productos.produc_id = entrega_producto.produc_id
     JOIN entrega_estado_producto ON entrega_producto.en_id = entrega_estado_producto.en_id AND productos.produc_id = entrega_estado_producto.produc_id
     WHERE entrega_estado_producto.en_id = ?;`;
 
-    const inventario = await connection.query(query, [params.en_id]);
+    const inventario = await connection.query(query, [en_id]);
 
     const productos = inventario.map((producto) => {
       return {

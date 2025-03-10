@@ -7,7 +7,8 @@ export async function GET(request, { params }) {
             JOIN productos ON entrega_estado_producto.produc_id = productos.produc_id
             WHERE entrega_estado_producto.en_id = ?;`;
   try {
-    const result = await connection.query(sql, [params.en_id]);
+    const { en_id } = await params;
+    const result = await connection.query(sql, [en_id]);
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
@@ -18,9 +19,10 @@ export async function GET(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
+    const { en_id } = await params;
     const result = await connection.query(
       "DELETE FROM entrega_estado_producto WHERE en_id = ?",
-      [params.en_id]
+      [en_id]
     );
     if (result.affectedRows == 0) {
       return NextResponse.json(

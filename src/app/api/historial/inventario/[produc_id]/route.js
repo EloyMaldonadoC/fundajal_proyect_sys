@@ -3,7 +3,7 @@ import { connection } from "@/libs/mysql";
 
 export async function GET(request, { params }) {
   try {
-    const { produc_id } = params;
+    const { produc_id } = await params;
     const [historial, proveedores] = await connection.query(`
       SELECT productos.produc_nombre, historial.*
       FROM historial

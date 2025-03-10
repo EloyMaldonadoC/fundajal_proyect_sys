@@ -3,9 +3,10 @@ import { connection } from "@/libs/mysql";
 
 export async function GET(request, { params }) {
   try {
+    const { cli_id } = await params;
     const result = await connection.query(
       "SELECT * FROM clientes WHERE cli_id = ?",
-      [params.cli_id]
+      [cli_id]
     );
     if (result.length == 0) {
       return NextResponse.json(
@@ -23,11 +24,12 @@ export async function GET(request, { params }) {
 
 export async function PUT(request, { params }) {
   try {
+    const { cli_id } = await params;
     const data = await request.json();
     console.log(data);
     const result = await connection.query(
       "UPDATE clientes SET ? WHERE cli_id = ?",
-      [data, params.cli_id]
+      [data, cli_id]
     );
 
     if (result.affectedRows == 0) {
@@ -39,7 +41,7 @@ export async function PUT(request, { params }) {
 
     const updatedProduct = await connection.query(
       "SELECT * FROM clientes WHERE cli_id = ?",
-      [params.cli_id]
+      [cli_id]
     );
     return NextResponse.json(updatedProduct[0]);
   } catch (error) {
@@ -51,9 +53,10 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
+    const { cli_id } = await params;
     const result = await connection.query(
       "DELETE FROM clientes WHERE cli_id = ?",
-      [params.cli_id]
+      [cli_id]
     );
     if (result.affectedRows == 0) {
       return NextResponse.json(

@@ -9,7 +9,8 @@ export async function GET(request, { params }) {
   	JOIN empleados ON empleado_entraga.emp_id = empleados.emp_id
     WHERE empleado_entraga.en_id = ?`;
   try {
-    const result = await connection.query(sql, [params.en_id])
+    const { en_id } = await params;
+    const result = await connection.query(sql, [en_id])
     return NextResponse.json(result)
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 })
@@ -19,9 +20,10 @@ export async function GET(request, { params }) {
 }
 export async function DELETE(request, { params }) {
   try {
+    const { en_id } = await params;
     const result = await connection.query(
       "DELETE FROM empleado_entraga WHERE en_id = ?",
-      [params.en_id]
+      [en_id]
     );
     if (result.affectedRows == 0) {
       return NextResponse.json(

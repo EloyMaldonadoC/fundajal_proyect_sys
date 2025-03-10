@@ -3,9 +3,10 @@ import { connection } from "@/libs/mysql";
 
 export async function GET(request, { params }) {
   try {
+    const { pa_id } = await params;
     const result = await connection.query(
       "SELECT * FROM paquetes WHERE pa_id = ?",
-      [params.pa_id]
+      [pa_id]
     );
     if (result.length == 0) {
       return NextResponse.json(
@@ -23,11 +24,12 @@ export async function GET(request, { params }) {
 
 export async function PUT(request, { params }) {
   try {
+    const { pa_id } = await params;
     const data = await request.json();
     console.log(data);
     const result = await connection.query(
       "UPDATE paquetes SET ? WHERE pa_id = ?",
-      [data, params.pa_id]
+      [data, pa_id]
     );
 
     if (result.affectedRows == 0) {
@@ -39,7 +41,7 @@ export async function PUT(request, { params }) {
 
     const updatedProduct = await connection.query(
       "SELECT * FROM paquetes WHERE pa_id = ?",
-      [params.pa_id]
+      [pa_id]
     );
     return NextResponse.json(updatedProduct[0]);
   } catch (error) {
@@ -51,9 +53,10 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
+    const { pa_id } = await params;
     const result = await connection.query(
       "DELETE FROM paquetes WHERE pa_id = ?",
-      [params.pa_id]
+      [pa_id]
     );
     if (result.affectedRows == 0) {
       return NextResponse.json(
@@ -63,7 +66,7 @@ export async function DELETE(request, { params }) {
     }
     const resultDelete = await connection.query(
       "DELETE FROM producto_paquete WHERE pa_id = ?",
-      [params.pa_id]
+      [pa_id]
     )
     return new Response(null, { status: 204 });
   } catch (error) {

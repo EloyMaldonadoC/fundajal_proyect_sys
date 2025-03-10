@@ -9,7 +9,8 @@ export async function GET(request, { params }) {
       WHERE proveedir_producto.prov_id = ?;`;
 
   try {
-    const result = await connection.query(sql, [params.prov_id]);
+    const { prov_id } = await params;
+    const result = await connection.query(sql, [prov_id]);
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });

@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { connection } from "@/libs/mysql";
 
 export async function GET(request, { params }) {
-  const data = `%${params.nombre}%`;
+  const { nombre } = await params;
+  const data = `%${nombre}%`;
   console.log(data);
 
   const sql = `SELECT * FROM paquetes

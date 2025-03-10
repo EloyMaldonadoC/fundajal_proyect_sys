@@ -3,7 +3,7 @@ import { connection } from "@/libs/mysql";
 
 export async function GET(req, { params }) {
   try {
-    const { en_id } = params;
+    const { en_id } = await params;
 
     // Realiza consultas independientes para cada tabla
     const [entregas, vehiculos, empleados, clientes, entrega_vehiculo, empleado_entraga, productos, paquetes, productos_paquete, producto_estado] = await connection.query(

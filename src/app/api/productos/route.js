@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const result = await connection.query("SELECT * from productos");
+    const result = await connection.query("SELECT * from productos ORDER BY produc_nombre ASC");
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json(

@@ -10,7 +10,8 @@ export async function GET(request, { params }) {
     WHERE producto_paquete.pa_id = ? AND producto_paquete.produc_id = ?;`;
   console.log([params.pa_id, params.produc_id]);
   try {
-    const result = await connection.query(sql, [params.pa_id, params.produc_id]);
+    const { pa_id, produc_id } = await params;
+    const result = await connection.query(sql, [pa_id, produc_id]);
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });

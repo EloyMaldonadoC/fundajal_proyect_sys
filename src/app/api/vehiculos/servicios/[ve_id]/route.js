@@ -25,11 +25,12 @@ export async function GET(request, { params }) {
 
 export async function PUT(request, { params }) {
   try {
+    const { ve_id } = await params;
     const data = await request.json();
     console.log(data);
     const result = await connection.query(
       "UPDATE servicios SET ? WHERE ve_id = ?",
-      [data, params.ve_id]
+      [data, ve_id]
     );
 
     if (result.affectedRows == 0) {
@@ -53,9 +54,10 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
+    const { ve_id } = await params;
     const result = await connection.query(
       "DELETE FROM servicios WHERE ve_id = ?",
-      [params.ve_id]
+      [ve_id]
     );
     if (result.affectedRows == 0) {
       return NextResponse.json(

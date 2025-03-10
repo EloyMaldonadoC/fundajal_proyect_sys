@@ -3,9 +3,10 @@ import { connection } from "@/libs/mysql";
 
 export async function GET(request, { params }) {
   try {
+    const { deu_id } = await params;
     const result = await connection.query(
       "SELECT * FROM pagos WHERE deu_id = ? ORDER BY pag_fecha_transac DESC;",
-      [params.deu_id]
+      [deu_id]
     );
     return NextResponse.json(result);
   } catch (error) {

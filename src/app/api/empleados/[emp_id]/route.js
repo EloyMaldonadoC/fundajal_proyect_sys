@@ -3,11 +3,12 @@ import { connection } from "@/libs/mysql";
 
 export async function GET(request, { params }) {
   try {
+    const { emp_id } = await params;
     const result = await connection.query(`
       SELECT emp_id, emp_nombre, emp_apellido, emp_num_tel, emp_rol, 
       emp_estado, emp_hora_entrada, emp_hora_salida, emp_foto, emp_usuario
       FROM empleados WHERE emp_id = ?;`,
-      [params.emp_id]
+      [emp_id]
     );
     if (result.length == 0) {
       return NextResponse.json(
@@ -25,11 +26,12 @@ export async function GET(request, { params }) {
 
 export async function PUT(request, { params }) {
   try {
+    const { emp_id } = await params;
     const data = await request.json();
     console.log(data);
     const result = await connection.query(
       "UPDATE empleados SET ? WHERE emp_id = ?",
-      [data, params.emp_id]
+      [data, emp_id]
     );
 
     if (result.affectedRows == 0) {
@@ -43,7 +45,7 @@ export async function PUT(request, { params }) {
       SELECT emp_id, emp_nombre, emp_apellido, emp_num_tel, emp_rol, 
       emp_estado, emp_hora_entrada, emp_hora_salida, emp_foto, emp_usuario
       FROM empleados WHERE emp_id = ?;`,
-      [params.emp_id]
+      [emp_id]
     );
     return NextResponse.json(updatedProduct[0]);
   } catch (error) {
@@ -55,9 +57,10 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
+    const { emp_id } = await params;
     const result = await connection.query(
       "DELETE FROM empleados WHERE emp_id = ?",
-      [params.emp_id]
+      [emp_id]
     );
     if (result.affectedRows == 0) {
       return NextResponse.json(

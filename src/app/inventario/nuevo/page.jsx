@@ -285,6 +285,7 @@ function NewProduct() {
         produc_id: producId,
         hist_estado: "Entrada",
         hist_cantidad: histCantidad,
+        hist_motivo: "Adquisición",
         hist_precio_ent_sal: histPrecio,
         hist_hora: obtenerHoraActual(),
         hist_dia: now.toISOString().split("T")[0],

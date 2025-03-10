@@ -12,6 +12,7 @@ import {
 } from "@/components/input/InputComponents";
 import LoadingScreen from "@/components/LoadingScreen";
 import { useSession } from "next-auth/react";
+import LoadingData from "@/components/LoadingData";
 
 function FilaProducto({ producto, addProductList, deleteProductList, changeValue, incialiced }) {
   const existe = incialiced.find((item) => item.produc_id == producto.produc_id);
@@ -19,7 +20,7 @@ function FilaProducto({ producto, addProductList, deleteProductList, changeValue
 
   useEffect(() => {
     if (existe) {
-      setCantidad(existe.produc_pa_cantidad);
+      setCantidad(Number(existe.produc_pa_cantidad));
     }
   }, [existe]);
 
@@ -34,8 +35,8 @@ function FilaProducto({ producto, addProductList, deleteProductList, changeValue
           className={styles.input}
           value={cantidad}
           onChange={(num) => {
-            setCantidad(num.target.value);
-            changeValue(producto.produc_id, num.target.value);
+            setCantidad(Number(num.target.value));
+            changeValue(producto.produc_id, Number(num.target.value));
           }}
         />
       </div>
@@ -63,6 +64,7 @@ function EditarPaquete() {
 
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState("");
+  const [loadingData, setLoadingData] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -72,6 +74,7 @@ function EditarPaquete() {
   const [validarDescripcion, setValidarDescripcion] = useState(false);
   const [precio, setPrecio] = useState("");
   const [validarPrecio, setvalidarPrecio] = useState(false);
+  const [comision, setComision] = useState(0);
 
   const [busqueda, setBusqueda] = useState("");
   const [productos, setProductos] = useState(null);
@@ -90,6 +93,7 @@ function EditarPaquete() {
         setNombre(data.pa_nombre);
         setDescripcion(data.pa_descripcion);
         setPrecio(data.pa_precio);
+        setComision(data.pa_comision);
       })
       .catch((error) => {
         setLoading(false);
@@ -170,6 +174,7 @@ function EditarPaquete() {
   };
   const editProductLisr = async () => {
     try {
+      setLoadingData(true);
       const response = await fetch(`/api/paquetes/productos/${id}`, {
         method: "DELETE",
       });
@@ -201,6 +206,7 @@ function EditarPaquete() {
           pa_nombre: nombre,
           pa_descripcion: descripcion,
           pa_precio: precio,
+          pa_comision: comision,
         }),
       }).then((response) => {
         if (!response.ok) {
@@ -270,6 +276,14 @@ function EditarPaquete() {
               }}
               validation={validarPrecio}
             />
+            <Input
+              placeholder={"Comisión"}
+              value={comision}
+              type={"number"}
+              onChange={(comision) => {
+                setComision(comision);
+              }}
+            />
           </div>
         </div>
         <div className={styles.herramientas}>
@@ -320,6 +334,7 @@ function EditarPaquete() {
           editProductLisr();
         }}
       />
+      <LoadingData show={loadingData} />
     </div>
   );
 }

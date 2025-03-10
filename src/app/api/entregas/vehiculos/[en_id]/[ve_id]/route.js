@@ -9,7 +9,8 @@ export async function GET(request, { params }) {
     JOIN vehiculos ON entrega_vehiculo.ve_id = vehiculos.ve_id
     WHERE entrega_vehiculo.en_id = ? AND entrega_vehiculo.ve_id = ?`;
   try {
-    const result = await connection.query(sql, [params.en_id, params.ve_id]);
+    const { en_id, ve_id } = await params;
+    const result = await connection.query(sql, [en_id, ve_id]);
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
