@@ -230,25 +230,28 @@ function Entrega() {
 
   const handlePressSave = async () => {
     if (!saved) {
-      setLoadingData(true);
       try {
+        setLoadingData(true);
         //si hubieron modificaciones en la entrega guardar las modificaciones
         if (modificoEntrega) {
+          const entregaActulizada = {
+            en_dia_entrega: fechaEntrega != "" ? fechaEntrega : null,
+            en_hora_entrega: horaEntrega != "" ? horaEntrega : null,
+            en_dia_salida: fechaSalida != "" ? fechaSalida : null,
+            en_hora_salida: horaSalida != "" ? horaSalida : null,
+            en_incremento_producto: incrementoProductos,
+            en_incremento_paquete: incrementoPaquetes,
+            en_estado: horaEntrega != "" ? "en edición" : "por confirmar",
+          }
           await fetch(`/api/entregas/${id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-              en_dia_entrega: new Date(fechaEntrega),
-              en_hora_entrega: horaEntrega != "" ? horaEntrega : null,
-              en_dia_salida: new Date(fechaSalida),
-              en_hora_salida: horaSalida != "" ? horaSalida : null,
-              en_incremento_producto: incrementoProductos,
-              en_incremento_paquete: incrementoPaquetes,
-              en_estado: horaEntrega != "" ? "en edición" : "por confirmar",
-            }),
-          });
+            body: JSON.stringify(entregaActulizada),
+          }).catch((error) => {
+            console.log(error.message);
+          }); 
         }
         //Si hubieron modificaciones en los productos guardar modificaciones
         if (modificoProductos) {

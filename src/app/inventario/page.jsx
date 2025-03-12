@@ -28,6 +28,7 @@ function Inventario() {
         return respose.json();
       })
       .then((data) => {
+        console.log(data);
         setProductos(data);
         setLoading(false);
 

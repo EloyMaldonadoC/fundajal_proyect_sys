@@ -32,10 +32,11 @@ export async function PUT(request, { params }) {
     }
     const updatedProduct = await connection.query(
       "SELECT * FROM deudas WHERE en_id = ?",
-      [deu_id]
+      [en_id]
     );
     return NextResponse.json(updatedProduct);
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ message: error.message }, { status: 500 });
   } finally {
     connection.quit();

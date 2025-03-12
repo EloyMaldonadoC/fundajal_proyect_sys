@@ -33,10 +33,8 @@ export async function PUT(request, { params }) {
   try {
     const { en_id } = await params;
     const data = await request.json();
-    const result = await connection.query(
-      "UPDATE entregas SET ? WHERE en_id = ?",
-      [data, en_id]
-    );
+    const query = "UPDATE entregas SET ? WHERE en_id = ?";
+    const result = await connection.query(query, [data, en_id]);
 
     if (result.affectedRows == 0) {
       return NextResponse.json(
