@@ -1,6 +1,7 @@
 import { use, useEffect, useState } from "react";
 import styles from "./module/TablaVisualizarProductos.module.css";
 import CheckBoxCargado from "./CheckBoxCargado";
+import { sumarProductos } from "@/functions/utilsFormat";
 
 function TablaVisualizarProductos({
   id,
@@ -92,7 +93,7 @@ function TablaVisualizarProductos({
   return (
     <div>
       <div className={styles.header}>
-        <h3>Productos</h3>
+        <h3>{sumarProductos(global)} Productos Listados</h3>
       </div>
       <div className={styles.titulo}>
         <h4 className={styles.nombre}>Producto</h4>

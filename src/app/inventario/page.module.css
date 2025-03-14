@@ -20,21 +20,16 @@
     align-items: center;
 }
 .container {
-    display: flex;
-    flex-direction: row;
     box-sizing: border-box;
     overflow: auto;
     -webkit-overflow-scrolling: auto;
 }
 .tabla {
-    background-color: var(--components-color);
     height: fit-content;
     box-sizing: border-box;
-    padding: 16px;
     margin-top: 8px;
     margin-right: 4px;
     border-radius: 16px;
-    box-shadow: 0px 4px 6px var(--shadow-color);
     display: flex;
     justify-content: center;
 }
@@ -64,3 +59,31 @@
         width: 30%;
     }
 }
+.loadingScreen {
+    box-sizing: border-box;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .error {
+    box-sizing: border-box;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .textIcon {
+    font-size: 96px;
+    color: var(--botton-color);
+  }
+  .textError {
+    font-size: 26px;
+    color: var(--botton-color);
+  }
+  .errorContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }

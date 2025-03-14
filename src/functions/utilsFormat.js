@@ -74,4 +74,12 @@ function obtenerHoraActual() {
   return horas + ':' + minutos + ':' + segundos;
 }
 
-export { formatNumber, getDayOfWeek, formatTimeWithoutSeconds, formatDay, obtenerHoraActual };
+function sumarProductos(lista) {
+  let suma = 0;
+  lista.forEach((producto) => {
+    suma += producto.en_es_produc_cant;
+  });
+  return suma;
+}
+
+export { formatNumber, getDayOfWeek, formatTimeWithoutSeconds, formatDay, obtenerHoraActual, sumarProductos };

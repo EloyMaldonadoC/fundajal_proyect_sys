@@ -23,6 +23,9 @@ function NuevaEntrega() {
   const [incProductos, setIncProductos] = useState(0);
   const [incPaquetes, setIncPaquetes] = useState(0);
 
+  const [productos, setProductos] = useState([]);
+  const [paquetes, setPaquetes] = useState([]);
+
   const [listaProductos, setListaProductos] = useState([]);
   const [validarListaProductos, setValidarListaProductos] = useState(false);
   const [listaPaquetes, setListaPaquetes] = useState([]);
@@ -45,6 +48,8 @@ function NuevaEntrega() {
   //vista
   const [mostrarSeleccion, setMostrarSeleccion] = useState(true);
   const [mostrarListado, setMostrarListado] = useState(false);
+  const [mostrarPaquetes, setMostrarPaquetes] = useState(true);
+  const [mostrarProductos, setMostrarProductos] = useState(false);
   //alerta
   const [showAlert, setShowAlert] = useState(false);
   const [messageTitle, setMessageTitle] = useState("");
@@ -64,22 +69,46 @@ function NuevaEntrega() {
   };
 
   useEffect(() => {
-    if (session.user.role === "Administrador" || session.user.role === "Encargado" || session.user.role === 'Oficina') {
+    if (
+      session.user.role === "Administrador" ||
+      session.user.role === "Encargado" ||
+      session.user.role === "Oficina"
+    ) {
       generateNewID();
-    fetch("/api/datetime/date")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Response is not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setDate(data.fecha_actual);
-      });
+      fetch("/api/datetime/date")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Response is not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setDate(data.fecha_actual);
+        });
+      fetch("/api/paquetes")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Response is not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setPaquetes(data);
+        })
+      fetch("/api/productos")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Response is not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setProductos(data);
+        })
     } else {
       router.push("/");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   useEffect(() => {
@@ -122,10 +151,12 @@ function NuevaEntrega() {
       for (let i = 0; i < listaProductos.length; i++) {
         deuFunjal =
           deuFunjal +
-          listaProductos[i].produc_parti_fun * listaProductos[i].en_produc_cantidad;
+          listaProductos[i].produc_parti_fun *
+            listaProductos[i].en_produc_cantidad;
         deuEnlace =
           deuEnlace +
-          listaProductos[i].produc_parti_enlace * listaProductos[i].en_produc_cantidad;
+          listaProductos[i].produc_parti_enlace *
+            listaProductos[i].en_produc_cantidad;
       }
       for (let y = 0; y < listaPaquetes.length; y++) {
         deuFunjal =
@@ -133,15 +164,13 @@ function NuevaEntrega() {
           listaPaquetes[y].pa_comision * listaPaquetes[y].en_pa_cantidad;
         deuEnlace =
           deuEnlace +
-          listaPaquetes[y].pa_comision * listaPaquetes[y].en_pa_cantidad        
+          listaPaquetes[y].pa_comision * listaPaquetes[y].en_pa_cantidad;
       }
       setDeudaComisionFunjal(deuFunjal);
       setDeudaComisionEnlace(deuEnlace);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deudaProductos, listaPaquetes, listaProductos]);
-
-  
 
   const validarInformacion = () => {
     if (encargado == null) {
@@ -237,9 +266,9 @@ function NuevaEntrega() {
           en_id: entregaId,
           deu_abono: abono,
           deu_estado: "a procesar",
-          deu_deuda:
-            Number(deudaProductos) + Number(deudaPaquetes),
-          deu_deuda_pendiente: Number(deudaProductos) + Number(deudaPaquetes) - Number(abono),
+          deu_deuda: Number(deudaProductos) + Number(deudaPaquetes),
+          deu_deuda_pendiente:
+            Number(deudaProductos) + Number(deudaPaquetes) - Number(abono),
           deu_comision_funjal: Number(deudaComisionFunjal),
           deu_comision_enlace: Number(deudaComisionEnlace),
         }),
@@ -326,34 +355,37 @@ function NuevaEntrega() {
         <div className={styles.subContenedor1}>
           <div className={styles.herramientasContenido}>
             <Button
-              text={"Seleccionar Productos"}
-              type={mostrarSeleccion ? "" : "cancelar"}
+              text={"Total Lista de Productos"}
+              type={mostrarListado ? "" : "cancelar"}
               onPress={() => {
-                setMostrarSeleccion(true);
+                setMostrarListado(true);
+                setMostrarPaquetes(false);
+                setMostrarProductos(false);
+              }}
+            />
+            <Button
+              text={"Seleccionar Paquetes"}
+              type={mostrarPaquetes ? "" : "cancelar"}
+              onPress={() => {
+                setMostrarPaquetes(true);
+                setMostrarProductos(false);
                 setMostrarListado(false);
               }}
             />
             <Button
-              text={"Total Lista de Productos"}
-              type={mostrarListado ? "" : "cancelar"}
+              text={"Seleccionar Productos"}
+              type={mostrarProductos ? "" : "cancelar"}
               onPress={() => {
-                setMostrarSeleccion(false);
-                setMostrarListado(true);
+                setMostrarPaquetes(false);
+                setMostrarProductos(true);
+                setMostrarListado(false);
               }}
             />
           </div>
-          {mostrarSeleccion && (
-            <div className={styles.scrollable}>
-              <TablaSeleccionProductos
-                listaProductos={listaProductos}
-                modificarLista={(lista) => {
-                  setListaProductos(lista);
-                }}
-                idEntrega={entregaId}
-                modificador={incProductos}
-                validar={validarListaProductos}
-              />
+          <div>
+            {mostrarPaquetes && (
               <TablaSeleccionPaquetes
+                paque={paquetes}
                 listaPaquetes={listaPaquetes}
                 modificarLista={(lista) => {
                   setListaPaquetes(lista);
@@ -362,8 +394,20 @@ function NuevaEntrega() {
                 modificador={incPaquetes}
                 validar={validarListaPaquetes}
               />
-            </div>
-          )}
+            )}
+            {mostrarProductos && (
+              <TablaSeleccionProductos
+                produc={productos}
+                listaProductos={listaProductos}
+                modificarLista={(lista) => {
+                  setListaProductos(lista);
+                }}
+                idEntrega={entregaId}
+                modificador={incProductos}
+                validar={validarListaProductos}
+              />
+            )}
+          </div>
           {mostrarListado && (
             <div className={styles.scrollable}>
               <VisualizarContenidoDeEntrega

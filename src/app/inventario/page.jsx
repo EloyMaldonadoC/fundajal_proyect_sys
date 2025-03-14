@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
-import LoadingScreen from "@/components/LoadingScreen";
 import { Table, Info, Search, Button } from "@/components/input/InputComponents";
 import { useSession } from "next-auth/react";
+import IonIcon from "@reacticons/ionicons";
+import Loading from "../loading";
 
 function Inventario() {
   const { data: session, status } = useSession();
@@ -28,11 +29,8 @@ function Inventario() {
         return respose.json();
       })
       .then((data) => {
-        console.log(data);
         setProductos(data);
         setLoading(false);
-
-        console.log(data);
       })
       .catch((error) => {
         setError(error);
@@ -44,26 +42,6 @@ function Inventario() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restart, router]);
 
-  const handleClickRow = (id) => {
-    console.log(id);
-    fetch(`/api/inventario/productos/${id}`)
-      .then((respose) => {
-        if (!respose.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return respose.json();
-      })
-      .then((data) => {
-        setProveedor(data[0]);
-        setLoading(false);
-
-        console.log(data[0]);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
-  };
   const handlePressSearch = (data) => {
     if(data == '') {
       return
@@ -110,8 +88,26 @@ function Inventario() {
     router.push('/inventario/nuevo');
   }
 
-  if (loading) return <LoadingScreen />;
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading) {
+    return (
+      <div className={styles.loadingScreen}>
+        <Loading />
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className={styles.error}>
+        <div className={styles.errorContent}>
+          <IonIcon
+            className={styles.textIcon}
+            name="cloud-offline-outline"
+          ></IonIcon>
+          <p className={styles.textError}>{error.message}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -130,17 +126,7 @@ function Inventario() {
         <Button text={'Nueva entrada'} type={'cancelar'} onPress={handlePressNew}/>
       </div>
       <div className={styles.container}>
-        <div className={styles.tabla}>
-          <Table
-            productos={productos}
-            onClickRow={(id) => {
-              handleClickRow(id);
-            }}
-          />
-        </div>
-        <div className={styles.info}>
-          <Info proveedor={proveedor} />
-        </div>
+        <Table productos={productos} />
       </div>
     </div>
   );

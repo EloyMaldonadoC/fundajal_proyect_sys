@@ -46,7 +46,9 @@ export default function Entregas() {
     console.log("se renderiza");
     if (
       session.user.role === "Administrador" ||
-      session.user.role === "Encargado" || session.user.role === 'Oficina'
+      session.user.role === "Encargado" ||
+      session.user.role === "Oficina" ||
+      session.user.role === "Chofer"
     ) {
       fetch(
         `/api/entregas/cardEntregas?page=${
@@ -124,6 +126,14 @@ export default function Entregas() {
     return () => window.removeEventListener("scroll", handleScroll);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [total]);
+
+  useEffect(() => {
+    if (session.user.role === "Chofer") {
+      setFiltrarPorTodos(false);
+      setFiltrarPorEnProceso(true);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const controlScrollLoad = () => {
     if (entregas.length - paginaActual * totalPorPagina < 10) {
@@ -239,76 +249,111 @@ export default function Entregas() {
         </div>
         <div className={styles.filtro}>
           <div className={styles.ajustarfiltro}>
-            <Button
-              text={"Todos"}
-              type={filtrarPorTodos ? "cancelar" : ""}
-              onPress={() => {
-                setPaginaActual(0);
-                setEstado(null);
-                setEntregas([]);
-                controlarFiltroTodos();
-              }}
-            />
-            <Button
-              text={"Pendientes"}
-              type={filtrarPorPendientes ? "cancelar" : ""}
-              onPress={() => {
-                setPaginaActual(0);
-                setEntregas([]);
-                setEstado("por%20confirmar");
-                controlarFiltroPendientes();
-              }}
-            />
-            <Button
-              text={"En Edición"}
-              type={filtrarPorEnEdicion ? "cancelar" : ""}
-              onPress={() => {
-                setPaginaActual(0);
-                setEntregas([]);
-                setEstado("en%20edición");
-                controlarFiltroEnEdicion();
-              }}
-            />
-            {session.user.role === "Administrador" && (
+            {(session.user.role === "Administrador" ||
+              session.user.role === "Encargado" ||
+              session.user.role === "Oficina") && (
+              <Button
+                text={"Todos"}
+                type={filtrarPorTodos ? "cancelar" : ""}
+                onPress={() => {
+                  if (!filtrarPorTodos) {
+                    setPaginaActual(0);
+                    setEstado(null);
+                    setEntregas([]);
+                  }
+                  controlarFiltroTodos();
+                }}
+              />
+            )}
+            {(session.user.role === "Administrador" ||
+              session.user.role === "Encargado" ||
+              session.user.role === "Oficina") && (
+              <Button
+                text={"Pendientes"}
+                type={filtrarPorPendientes ? "cancelar" : ""}
+                onPress={() => {
+                  if (!filtrarPorPendientes) {
+                    setPaginaActual(0);
+                    setEntregas([]);
+                    setEstado("por%20confirmar");
+                  }
+                  controlarFiltroPendientes();
+                }}
+              />
+            )}
+            {(session.user.role === "Administrador" ||
+              session.user.role === "Encargado" ||
+              session.user.role === "Oficina") && (
+              <Button
+                text={"En Edición"}
+                type={filtrarPorEnEdicion ? "cancelar" : ""}
+                onPress={() => {
+                  if (!filtrarPorEnEdicion) {
+                    setPaginaActual(0);
+                    setEntregas([]);
+                    setEstado("en%20edición");
+                  }
+                  controlarFiltroEnEdicion();
+                }}
+              />
+            )}
+            {(session.user.role === "Administrador" ||
+              session.user.role === "Oficina") && (
               <Button
                 text={"Preparación"}
                 type={filtrarPorPreparados ? "cancelar" : ""}
                 onPress={() => {
-                  setPaginaActual(0);
-                  setEntregas([]);
-                  setEstado("preparación");
+                  if (!filtrarPorPreparados) {
+                    setPaginaActual(0);
+                    setEntregas([]);
+                    setEstado("preparación");
+                  }
                   controlarFiltroPreparado();
                 }}
               />
             )}
-            <Button
-              text={"En Proceso"}
-              type={filtrarPorEnProceso ? "cancelar" : ""}
-              onPress={() => {
-                setPaginaActual(0);
-                setEntregas([]);
-                setEstado("%reci%");
-                controlarFiltroEnProceso();
-              }}
-            />
-            <Button
-              text={"Finalizados"}
-              type={filtrarPorFinalizadas ? "cancelar" : ""}
-              onPress={() => {
-                setPaginaActual(0);
-                setEntregas([]);
-                setEstado("finalizada");
-                controlarFiltroFinalizadas();
-              }}
-            />
+            {(session.user.role === "Administrador" ||
+              session.user.role === "Encargado" ||
+              session.user.role === "Chofer") && (
+              <Button
+                text={"En Proceso"}
+                type={filtrarPorEnProceso ? "cancelar" : ""}
+                onPress={() => {
+                  if (!filtrarPorEnProceso) {
+                    setPaginaActual(0);
+                    setEntregas([]);
+                    setEstado("%reci%");
+                  }
+                  controlarFiltroEnProceso();
+                }}
+              />
+            )}
+            {session.user.role === "Administrador" && (
+              <Button
+                text={"Finalizados"}
+                type={filtrarPorFinalizadas ? "cancelar" : ""}
+                onPress={() => {
+                  if (!filtrarPorFinalizadas) {
+                    setPaginaActual(0);
+                    setEntregas([]);
+                    setEstado("finalizada");
+                  }
+                  controlarFiltroFinalizadas();
+                }}
+              />
+            )}
           </div>
-          <Button
+          {(session.user.role === "Administrador" ||
+            session.user.role === "Encargado"
+          ) && (
+            <Button
             text={"Nueva Entrega"}
             type={"cancelar"}
             onPress={() => {
               router.push("/entregas/nuevo");
             }}
           />
+          )}
         </div>
       </div>
       <div className={styles.contenido}>
@@ -336,8 +381,9 @@ export default function Entregas() {
                         disabled={
                           session.user.role === "Administrador"
                             ? true
-                            : session.user.role === "Encargado" && entrega.entrega.en_estado != "preparación"
-                            ? false
+                            : session.user.role === "Encargado" &&
+                              entrega.entrega.en_estado != "preparación"
+                            ? true
                             : false
                         }
                       />
@@ -370,13 +416,16 @@ export default function Entregas() {
                   )
                   .map((entrega, key) => (
                     <div key={key}>
-                      <CardEntrega entrega={entrega} disabled={
+                      <CardEntrega
+                        entrega={entrega}
+                        disabled={
                           session.user.role === "Administrador"
                             ? true
                             : session.user.role === "Encargado"
                             ? true
                             : false
-                        }/>
+                        }
+                      />
                     </div>
                   ))}
               </>
@@ -406,13 +455,16 @@ export default function Entregas() {
                   )
                   .map((entrega, key) => (
                     <div key={key}>
-                      <CardEntrega entrega={entrega} disabled={
+                      <CardEntrega
+                        entrega={entrega}
+                        disabled={
                           session.user.role === "Administrador"
                             ? true
                             : session.user.role === "Encargado"
                             ? true
                             : false
-                        }/>
+                        }
+                      />
                     </div>
                   ))}
               </>
@@ -442,11 +494,12 @@ export default function Entregas() {
                   )
                   .map((entrega, key) => (
                     <div key={key}>
-                      <CardEntrega entrega={entrega} disabled={
-                          session.user.role === "Administrador"
-                            ? true
-                            : false
-                        }/>
+                      <CardEntrega
+                        entrega={entrega}
+                        disabled={
+                          session.user.role === "Administrador" ? true : false
+                        }
+                      />
                     </div>
                   ))}
               </>
@@ -476,11 +529,12 @@ export default function Entregas() {
                   )
                   .map((entrega, key) => (
                     <div key={key}>
-                      <CardEntrega entrega={entrega} disabled={
-                          session.user.role === "Administrador"
-                            ? true
-                            : false
-                        }/>
+                      <CardEntrega
+                        entrega={entrega}
+                        disabled={
+                          (session.user.role === "Administrador" || session.user.role === "Chofer" || session.user.role === 'Encargado') ? true : false
+                        }
+                      />
                     </div>
                   ))}
               </div>

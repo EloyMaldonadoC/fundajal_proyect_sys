@@ -20,11 +20,9 @@ function Inicio() {
   const [datosReestructurados, setDatosReestructurados] = useState([]);
 
   useEffect(() => {
-    if (
-      session.user.role != "Administrador" &&
-      session.user.role != "Encargado"
-    ) {
-      fetch(`/api/entregas/cardEntregas/filtrarEmpleado?&page=${page}&limit=${limit}&user=${session.user.id}`)
+    if (session.user.role != "Administrador" && session.user.role != "Encargado") {
+      console.log("")
+      fetch(`/api/entregas/cardEntregas/filtrarEmpleado?&page=${page+1}&limit=${limit}&user=${session.user.id}`)
         .then((res) => {
           if (!res.ok) {
             throw new Error("No se pudo obtener la información");
@@ -41,7 +39,7 @@ function Inicio() {
         });
     }
     if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
-      fetch(`/api/entregas/cardEntregas/filtrarEmpleado?&page=${page}&limit=${limit}&access=Admin`)
+      fetch(`/api/entregas/cardEntregas/filtrarEmpleado?&page=${page+1}&limit=${limit}&access=Admin`)
         .then((res) => {
           if (!res.ok) {
             throw new Error("No se pudo obtener la información");
@@ -51,7 +49,6 @@ function Inicio() {
         .then((data) => {
           if (data.length != 0) {
             setEntregas([...entregas, ...data]);
-            setDiaGuardado(data[0].entrega.en_dia_entrega);
           }
           setLoading(false);
         })
@@ -61,7 +58,7 @@ function Inicio() {
         });
     }
     if (session.user.role === "Encargado") {
-      fetch(`/api/entregas/cardEntregas/filtrarEmpleado?&page=${page}&limit=${limit}&access=en&user=${session.user.id}`)
+      fetch(`/api/entregas/cardEntregas/filtrarEmpleado?&page=${page+1}&limit=${limit}&access=en&user=${session.user.id}`)
         .then((res) => {
           if (!res.ok) {
             throw new Error("No se pudo obtener la información");
@@ -70,25 +67,6 @@ function Inicio() {
         })
         .then((data) => {
           setEntregas([...entregas, ...data]);
-          setDiaGuardado(data[0].entrega.en_dia_entrega);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError(error);
-          setLoading(false);
-        });
-    }
-    if (session.user.role != "Encargado" && session.user.role != "Administrador" && session.user.role != 'Oficina') {
-      fetch(`/api/entregas/cardEntregas/filtrarEmpleado?&page=${page}&limit=${limit}&user=${session.user.id}`)
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("No se pudo obtener la información");
-          }
-          return res.json();
-        })
-        .then((data) => {
-          setEntregas([...entregas, ...data]);
-          setDiaGuardado(data[0].entrega.en_dia_entrega);
           setLoading(false);
         })
         .catch((error) => {

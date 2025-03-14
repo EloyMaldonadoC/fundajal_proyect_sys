@@ -5,11 +5,11 @@ import { Search } from "@/components/input/InputComponents";
 import LoadingScreen from "@/components/LoadingScreen";
 import InputNumber from "./InputNumber";
 
-function TablaSeleccionProductos({ listaProductos, idEntrega, validar, modificador, modificarLista }) {
+function TablaSeleccionProductos({ listaProductos, idEntrega, validar, modificador, modificarLista, produc }) {
   const [buscar, setBuscar] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 10;
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -17,21 +17,9 @@ function TablaSeleccionProductos({ listaProductos, idEntrega, validar, modificad
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    fetch("/api/productos")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Response is not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setProductos(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-      });
-  }, []);
+    setProductos(produc);
+    setLoading(false);
+  }, [produc]);
 
   useEffect(() => {
     const listaProductosModific = listaProductos.map((producto) => ({
@@ -129,7 +117,7 @@ function TablaSeleccionProductos({ listaProductos, idEntrega, validar, modificad
           <h4>cantidad</h4>
         </div>
       </div>
-      {productos && (
+      {productos.length != 0 && (
         <>
           {currentItems.map((producto, key) => (
             <div key={key}>

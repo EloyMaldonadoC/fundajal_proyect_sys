@@ -48,9 +48,9 @@
     margin-bottom: 4px;
   }
   .municipio {
-    flex-basis: 20%;
+    flex-basis: 30%;
     flex-grow: 1;
-    max-width: 20%;
+    max-width: 30%;
   }
   .pendiente {
     flex-basis: 10%;

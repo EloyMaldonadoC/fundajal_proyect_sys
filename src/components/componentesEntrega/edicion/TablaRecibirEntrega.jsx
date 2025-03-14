@@ -1,3 +1,4 @@
+import { sumarProductos } from "@/functions/utilsFormat";
 import CheckBoxRecibir from "./CheckBoxRecibir";
 import styles from "./module/TablaRecibirEntrega.module.css";
 
@@ -24,7 +25,7 @@ function TablaRecibirEntrega({ listaProductos, salida }) {
   return (
     <div>
       <div className={styles.header}>
-        <h3>Productos a entregar</h3>
+        <h3>{sumarProductos(listaProductos)} Productos a entregar</h3>
       </div>
       <div className={styles.titulo}>
         <h4 className={styles.nombre}>Producto</h4>

@@ -88,7 +88,12 @@ function Recibir() {
   const [listaNoEncontrado, setListaNoEncontrado] = useState([]);
 
   useEffect(() => {
-    if (session.user.role === "Administrador" || session.user.role === "Encargado") {
+    if (
+      session.user.role === "Administrador" ||
+      session.user.role === "Encargado" ||
+      session.user.role === "Oficina" ||
+      session.user.role === "Chofer"
+    ) {
       //busca entrega
       fetch(`/api/entregas/${id}`)
         .then((response) => {

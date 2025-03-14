@@ -45,7 +45,7 @@ export default function Home({ children }) {
                   <button className="logo" onClick={ handleButtonClick }>Fundación Jalisco</button>
                   <nav className="navigation">
                     <ul>
-                      {(session.user.role === 'Administrador' || session.user.role === 'Encargado') && (
+                      {(session.user.role === 'Administrador' || session.user.role === 'Encargado' || session.user.role === 'Oficina' || session.user.role === 'Chofer') && (
                         <li><button onClick={() => { router.push('/entregas') }}><p>Entregas</p><IonIcon name="calendar" size="medium"/></button></li>
                       )}
                       {(session.user.role === 'Administrador' || session.user.role === 'Oficina') && (

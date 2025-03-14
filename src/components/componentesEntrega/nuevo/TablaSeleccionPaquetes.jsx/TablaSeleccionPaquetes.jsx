@@ -5,11 +5,18 @@ import { Search } from "@/components/input/InputComponents";
 import LoadingScreen from "@/components/LoadingScreen";
 import InputNumber from "./InputNumber";
 
-function TablaSeleccionPaquetes({ listaPaquetes, modificarLista, idEntrega, validar, modificador }) {
+function TablaSeleccionPaquetes({
+  listaPaquetes,
+  modificarLista,
+  idEntrega,
+  validar,
+  modificador,
+  paque,
+}) {
   const [buscar, setBuscar] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 10;
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -17,21 +24,9 @@ function TablaSeleccionPaquetes({ listaPaquetes, modificarLista, idEntrega, vali
   const [paquetes, setPaquetes] = useState([]);
 
   useEffect(() => {
-    fetch("/api/paquetes")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Response is not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setPaquetes(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-      });
-  }, []);
+    setPaquetes(paque);
+    setLoading(false);
+  }, [paque]);
 
   useEffect(() => {
     const listaPaquetesModific = listaPaquetes.map((paquete) => ({
@@ -39,7 +34,7 @@ function TablaSeleccionPaquetes({ listaPaquetes, modificarLista, idEntrega, vali
       en_pa_desc: Number(modificador),
     }));
     modificarLista(listaPaquetesModific);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modificador]);
 
   const handlePageChange = (pageNumber) => {
@@ -59,7 +54,11 @@ function TablaSeleccionPaquetes({ listaPaquetes, modificarLista, idEntrega, vali
         item.pa_id === id
           ? {
               ...item,
-              ...{ en_id: Number(idEntrega), pa_id: Number(id), en_pa_cantidad: Number(newPacket) },
+              ...{
+                en_id: Number(idEntrega),
+                pa_id: Number(id),
+                en_pa_cantidad: Number(newPacket),
+              },
             }
           : item
       );
@@ -81,22 +80,22 @@ function TablaSeleccionPaquetes({ listaPaquetes, modificarLista, idEntrega, vali
   };
 
   // Calcular los elementos de la página actual
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = paquetes
-      .filter((paquete) =>
-        paquete.pa_nombre.toLowerCase().includes(buscar.toLowerCase())
-      )
-      .slice(indexOfFirstItem, indexOfLastItem);
-    // Número total de páginas
-    const totalPages = Math.ceil(
-      paquetes.filter((paquete) =>
-        paquete.pa_nombre.toLowerCase().includes(buscar.toLowerCase())
-      ).length / itemsPerPage
-    );
-  
-    if (loading) return <LoadingScreen />;
-    if (error) return <p>Error: {error.message}</p>;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = paquetes
+    .filter((paquete) =>
+      paquete.pa_nombre.toLowerCase().includes(buscar.toLowerCase())
+    )
+    .slice(indexOfFirstItem, indexOfLastItem);
+  // Número total de páginas
+  const totalPages = Math.ceil(
+    paquetes.filter((paquete) =>
+      paquete.pa_nombre.toLowerCase().includes(buscar.toLowerCase())
+    ).length / itemsPerPage
+  );
+
+  if (loading) return <LoadingScreen />;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div className={`${styles.container} ${validar ? styles.validar : ""}`}>
@@ -121,7 +120,7 @@ function TablaSeleccionPaquetes({ listaPaquetes, modificarLista, idEntrega, vali
           <h3>Cantidad</h3>
         </div>
       </div>
-      {paquetes && (
+      {paquetes.length != 0 && (
         <>
           {currentItems.map((paquete, key) => (
             <div key={key}>

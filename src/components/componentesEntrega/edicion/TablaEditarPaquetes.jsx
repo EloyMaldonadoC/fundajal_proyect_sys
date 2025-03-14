@@ -9,41 +9,24 @@ function TablaEditarPaquetes({
   lista,
   seleccionados,
   update,
-  incrementoPrede
+  incrementoPrede,
+  paque
 }) {
   const [paquetes, setPaquetes] = useState([]);
   const [listaPaquetes, setListaPaquetes] = useState([]);
   const [mostrarTotal, setMostrarTotal] = useState(false);
 
-  const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
 
   const [busqueda, setBusqueda] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-
-  useEffect(() => {
-    fetch("/api/paquetes")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Response is not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setPaquetes(data);
-        setCargando(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setCargando(false);
-      });
-  }, []);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     setListaPaquetes(lista);
-  }, [lista]);
+    setPaquetes(paque);
+  }, [lista, paque]);
 
   const updateCost = (paquete, nuevaCantidad) => {
     // Actualizar el producto existente
@@ -159,7 +142,7 @@ function TablaEditarPaquetes({
           </>
         )}
       </div>
-      {!cargando ? (
+      {paquetes ? (
         <>
           {paquetes.length != 0 ? (
             <>

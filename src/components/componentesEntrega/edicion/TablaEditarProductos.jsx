@@ -10,41 +10,24 @@ function TablaEditarProductos({
   lista,
   seleccionados,
   update,
-  incrementoPrede
+  incrementoPrede,
+  produc
 }) {
   const [productos, setProductos] = useState([]);
   const [listaProductos, setListaProductos] = useState([]);
   const [mostrarTotal, setMostrarTotal] = useState(false);
 
-  const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
 
   const [busqueda, setBusqueda] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-
-  useEffect(() => {
-    fetch("/api/productos")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Response is not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setProductos(data);
-        setCargando(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setCargando(false);
-      });
-  }, []);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     setListaProductos(lista);
-  }, [lista]);
+    setProductos(produc);
+  }, [lista, produc]);
 
   const addOrUpdateProduct = (producto, nuevaCantidad) => {
     const existingProduct = listaProductos.find(
@@ -160,7 +143,7 @@ function TablaEditarProductos({
           </>
         )}
       </div>
-      {!cargando ? (
+      {productos.length != 0 ? (
         <>
           {productos.length != 0 ? (
             <>

@@ -41,6 +41,8 @@ function Entrega() {
   const [deuda, setDeuda] = useState(0);
   const [abono, setAbono] = useState(0);
   const [encargado, setEncargado] = useState(0);
+  const [paquetes, setPaquetes] = useState([]);
+  const [productos, setProductos] = useState([]);
 
   const [fechaEntrega, setfechaEntrega] = useState("");
   const [fechaSalida, setFechaSalida] = useState("");
@@ -58,6 +60,8 @@ function Entrega() {
   //visualizar
   const [mostrarSeleccion, setMostrarSeleccion] = useState(true);
   const [mostararListado, setMostrarListado] = useState(false);
+  const [seleccionarProductos, setSeleccionarProductos] = useState(false);
+  const [seleccionarPaquetes, setSeleccionarPaquetes] = useState(true);
 
   //deudas
   const [deudaProductos, setDeudaProductos] = useState(0);
@@ -78,7 +82,8 @@ function Entrega() {
         .then((data) => {
           if (
             session.user.role === "Administrador" ||
-            data.emp_id === session.user.id || session.user.role === 'Oficina'
+            data.emp_id === session.user.id ||
+            session.user.role === "Oficina"
           ) {
             setEntrega(data);
             setEncargado(data.emp_id);
@@ -144,7 +149,33 @@ function Entrega() {
           setError(error);
         });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetch("/api/paquetes")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Response is not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setPaquetes(data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+    fetch("/api/productos")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Response is not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setProductos(data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, router]);
 
   useEffect(() => {
@@ -205,10 +236,12 @@ function Entrega() {
       for (let i = 0; i < listaProductos.length; i++) {
         deuFunjal =
           deuFunjal +
-          listaProductos[i].produc_parti_fun * listaProductos[i].en_produc_cantidad;
+          listaProductos[i].produc_parti_fun *
+            listaProductos[i].en_produc_cantidad;
         deuEnlace =
           deuEnlace +
-          listaProductos[i].produc_parti_enlace * listaProductos[i].en_produc_cantidad;
+          listaProductos[i].produc_parti_enlace *
+            listaProductos[i].en_produc_cantidad;
       }
       for (let i = 0; i < listaPaquetes.length; i++) {
         deuFunjal =
@@ -221,7 +254,7 @@ function Entrega() {
       setDeudaComisionFunjal(deuFunjal);
       setDeudaComisionEnlace(deuEnlace);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deudaProductos, listaPaquetes, listaProductos]);
 
   useEffect(() => {
@@ -242,7 +275,7 @@ function Entrega() {
             en_incremento_producto: incrementoProductos,
             en_incremento_paquete: incrementoPaquetes,
             en_estado: horaEntrega != "" ? "en edición" : "por confirmar",
-          }
+          };
           await fetch(`/api/entregas/${id}`, {
             method: "PUT",
             headers: {
@@ -251,7 +284,7 @@ function Entrega() {
             body: JSON.stringify(entregaActulizada),
           }).catch((error) => {
             console.log(error.message);
-          }); 
+          });
         }
         //Si hubieron modificaciones en los productos guardar modificaciones
         if (modificoProductos) {
@@ -265,11 +298,7 @@ function Entrega() {
             console.log("No se borraron productos");
           }
           console.log(responseProducto.status);
-          if (
-            responseProducto.status == 200 ||
-            responseProducto.status == 404
-          ) {
-            console.log("post");
+          if (listaProductos.length != 0) {
             await fetch("/api/entregas/productos", {
               method: "POST",
               headers: {
@@ -293,10 +322,7 @@ function Entrega() {
             console.log("No se borraron paquetes");
           }
 
-          if (
-            responsePaquetes.status == 200 ||
-            responsePaquetes.status == 404
-          ) {
+          if (listaPaquetes.length != 0) {
             await fetch("/api/entregas/paquetes", {
               method: "POST",
               headers: {
@@ -387,7 +413,7 @@ function Entrega() {
       .catch((error) => {
         setError(error.message);
       });
-    
+
     router.push(`/entregas`);
   };
   const cambiarModificadorProducto = (value) => {
@@ -525,6 +551,22 @@ function Entrega() {
                 setMostrarSeleccion(!mostrarSeleccion);
               }}
             />
+            <Button
+              text={"Seleccionar Paquetes"}
+              type={seleccionarPaquetes ? "" : "cancelar"}
+              onPress={() => {
+                setSeleccionarPaquetes(true);
+                setSeleccionarProductos(false);
+              }}
+            />
+            <Button
+              text={"Seleccionar Productos"}
+              type={seleccionarProductos ? "" : "cancelar"}
+              onPress={() => {
+                setSeleccionarProductos(true);
+                setSeleccionarPaquetes(false);
+              }}
+            />
           </div>
           {validarProductos && (
             <div className={styles.validarProductos}>
@@ -533,28 +575,34 @@ function Entrega() {
           )}
           {mostrarSeleccion && (
             <>
-              <TablaEditarProductos
-                idEntrega={id}
-                lista={listaProductos}
-                seleccionados={(data) => {
-                  setListaProductos(data);
-                  setSaved(false);
-                  setModificoProductos(true);
-                }}
-                update={(data) => setIncrementoProductos(data)}
-                incrementoPrede={incrementoProductos}
-              />
-              <TablaEditarPaquetes
-                idEntrega={id}
-                lista={listaPaquetes}
-                seleccionados={(data) => {
-                  setListaPaquetes(data);
-                  setSaved(false);
-                  setModificoPaquetes(true);
-                }}
-                update={(data) => setIncrementoPaquetes(data)}
-                incrementoPrede={incrementoPaquetes}
-              />
+              {seleccionarPaquetes && (
+                <TablaEditarPaquetes
+                  paque={paquetes}
+                  idEntrega={id}
+                  lista={listaPaquetes}
+                  seleccionados={(data) => {
+                    setListaPaquetes(data);
+                    setSaved(false);
+                    setModificoPaquetes(true);
+                  }}
+                  update={(data) => setIncrementoPaquetes(data)}
+                  incrementoPrede={incrementoPaquetes}
+                />
+              )}
+              {seleccionarProductos && (
+                <TablaEditarProductos
+                  produc={productos}
+                  idEntrega={id}
+                  lista={listaProductos}
+                  seleccionados={(data) => {
+                    setListaProductos(data);
+                    setSaved(false);
+                    setModificoProductos(true);
+                  }}
+                  update={(data) => setIncrementoProductos(data)}
+                  incrementoPrede={incrementoProductos}
+                />
+              )}
             </>
           )}
           {mostararListado && (
@@ -623,7 +671,10 @@ function Entrega() {
           y no se podran hacer más modificaciones. ¿Desea continuar?
         `}
         show={showModal}
-        handleAccept={() => {finalizarEdicion(); setLoadingData(true)}}
+        handleAccept={() => {
+          finalizarEdicion();
+          setLoadingData(true);
+        }}
         handleClose={() => setShowModal(false)}
       />
       <Modal
@@ -636,7 +687,7 @@ function Entrega() {
         handleAccept={() => cancelarEntrega()}
         handleClose={() => setShowCancelarEntrega(false)}
       />
-      <LoadingData show={loadingData}/>
+      <LoadingData show={loadingData} />
     </div>
   );
 }

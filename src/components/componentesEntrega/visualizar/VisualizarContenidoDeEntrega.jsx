@@ -39,13 +39,13 @@ function VisualizarContenidoDeEntrega({productos, paquetes, totalAPagar}) {
                 {paquete.en_pa_cantidad}
               </div>
               <div className={styles.precio}>
-                {formatNumber(paquete.pa_precio + paquete.en_pa_desc)}
+                {formatNumber(paquete.en_pa_precio + paquete.en_pa_desc)}
               </div>
               <div className={styles.total}>
                 {formatNumber(
                   calcTotal(
                     Number(paquete.en_pa_cantidad),
-                    Number(paquete.pa_precio + paquete.en_pa_desc)
+                    Number(paquete.en_pa_precio + paquete.en_pa_desc)
                   )
                 )}
               </div>
@@ -62,13 +62,13 @@ function VisualizarContenidoDeEntrega({productos, paquetes, totalAPagar}) {
                 {producto.en_produc_cantidad}
               </div>
               <div className={styles.precio}>
-                {formatNumber(producto.produc_precio_venta + producto.en_produc_oferta)}
+                {formatNumber(producto.en_produc_precio + producto.en_produc_oferta)}
               </div>
               <div className={styles.total}>
                 {formatNumber(
                   calcTotal(
                     Number(producto.en_produc_cantidad),
-                    Number(producto.produc_precio_venta + producto.en_produc_oferta)
+                    Number(producto.en_produc_precio + producto.en_produc_oferta)
                   )
                 )}
               </div>

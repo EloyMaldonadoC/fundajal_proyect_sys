@@ -24,7 +24,7 @@ export async function GET(req) {
         `SELECT e.*
           FROM (SELECT DISTINCT en_id FROM empleado_entraga) ee
           JOIN entregas e ON ee.en_id = e.en_id
-          ORDER BY e.en_dia_entrega DESC LIMIT 60 OFFSET 0;
+          ORDER BY e.en_dia_entrega DESC LIMIT ${limit} OFFSET ${offset};
           
           SELECT * FROM vehiculos;
     
@@ -68,7 +68,7 @@ export async function GET(req) {
         `SELECT *
           FROM entregas
           WHERE emp_id = ${user}
-          ORDER BY entregas.en_dia_entrega DESC LIMIT 60 OFFSET 0;
+          ORDER BY entregas.en_dia_entrega DESC LIMIT ${limit} OFFSET ${offset};
           
           SELECT * FROM vehiculos;
     
@@ -109,22 +109,23 @@ export async function GET(req) {
         entrega_vehiculo,
         empleado_entraga,
       ] = await connection.query(
-        `SELECT e.*
-          FROM (SELECT DISTINCT en_id FROM empleado_entraga) ee
-          JOIN entregas e ON ee.en_id = e.en_id
-          ${user ? `WHERE emp_id = ${user}` : ""}
-          ORDER BY e.en_dia_entrega DESC LIMIT 60 OFFSET 0;
-          
-          SELECT * FROM vehiculos;
-    
-          SELECT emp_id, emp_nombre, emp_apellido, emp_num_tel, emp_rol, 
-          emp_estado, emp_hora_entrada, emp_hora_salida, emp_foto, emp_usuario FROM empleados;
-    
-          SELECT * FROM clientes;
-    
-          SELECT * FROM entrega_vehiculo;
-    
-          SELECT * FROM empleado_entraga;`
+        `SELECT entregas.*
+        FROM empleado_entraga
+        JOIN entregas ON empleado_entraga.en_id = entregas.en_id
+        WHERE empleado_entraga.emp_id = ${user}
+        ORDER BY entregas.en_dia_entrega DESC LIMIT ${limit} OFFSET ${offset};
+
+        SELECT * FROM vehiculos;
+
+        SELECT emp_id, emp_nombre, emp_apellido, emp_num_tel, 
+        emp_rol, emp_estado, emp_hora_entrada, emp_hora_salida, emp_foto, emp_usuario 
+        FROM empleados;
+
+        SELECT * FROM clientes;
+
+        SELECT * FROM entrega_vehiculo;
+
+        SELECT * FROM empleado_entraga;`
       );
       const data = entregas.map((entrega) => ({
         en_dia_entrega: entrega.en_dia_entrega,

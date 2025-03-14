@@ -50,11 +50,11 @@ function NewProduct() {
   //Producto
   const [producId, setProducId] = useState(generateID());
   const [producNombre, setProducNombre] = useState("");
-  const [producPrecio, setProducPrecio] = useState(0);
+  const [producPrecio, setProducPrecio] = useState("");
   const [producComisionFundacion, setProducComisionFundacion] = useState("");
   const [producComisionEnlace, setProducComisionEnlace] = useState("");
   //historial
-  const [histPrecio, setHistPrecio] = useState(0);
+  const [histPrecio, setHistPrecio] = useState("");
   const [histCantidad, setHistCantidad] = useState("");
   //modales
   const [showModalProv, setShowModalProv] = useState(false);
@@ -227,8 +227,8 @@ function NewProduct() {
         produc_nombre: producNombre,
         produc_precio_venta: producPrecio,
         produc_existencias: histCantidad,
-        produc_parti_fun: producComisionFundacion,
-        produc_parti_enlace: producComisionEnlace,
+        produc_parti_fun: producComisionFundacion == "" ? 0 : producComisionFundacion,
+        produc_parti_enlace: producComisionEnlace == "" ? 0 : producComisionEnlace,
       };
       const response = await fetch(`/api/productos`, {
         method: "POST",
@@ -517,17 +517,7 @@ function NewProduct() {
               readOnly={producReadOnly}
             />
             <Input
-              placeholder={"Participacion Fundación"}
-              value={producComisionFundacion}
-              onChange={(participacion) => {
-                setProducComisionFundacion(Number(participacion));
-              }}
-              type={"number"}
-              validation={validarProduc}
-              readOnly={producReadOnly}
-            />
-            <Input
-              placeholder={"Participacion Enlace"}
+              placeholder={"Participacion Municipio"}
               value={producComisionEnlace}
               onChange={(participacion) => {
                 setProducComisionEnlace(Number(participacion));

@@ -14,8 +14,7 @@ function TablaHistorialEntregas({entregas}) {
         <h4 className={styles.estado}>Estado</h4>
         <h4 className={styles.monto}>Monto</h4>
         <h4 className={styles.pendiente}>Pago pendiente</h4>
-        <h4 className={styles.comision}>Comisión In</h4>
-        <h4 className={styles.comision}>Comisión Ex</h4>
+        <h4 className={styles.comision}>Comisión Municipio</h4>
         <h4 className={styles.totalfunjal}>Total</h4>
       </div>
       {entregas ? (
@@ -27,9 +26,8 @@ function TablaHistorialEntregas({entregas}) {
               <div className={styles.estado}>{entrega.deu_estado}</div>
               <div className={styles.monto}>{formatNumber(entrega.deu_deuda)}</div>
               <div className={styles.pendiente}>{formatNumber(entrega.deu_deuda_pendiente)}</div>
-              <div className={styles.comision}>{formatNumber(entrega.deu_comision_funjal)}</div>
               <div className={styles.comision}>{formatNumber(entrega.deu_comision_enlace)}</div>
-              <div className={styles.totalfunjal}>{formatNumber(entrega.deu_deuda - entrega.deu_comision_funjal - entrega.deu_comision_enlace)}</div>
+              <div className={styles.totalfunjal}>{formatNumber(entrega.deu_deuda - entrega.deu_comision_enlace)}</div>
             </div>
           ))}
         </>
