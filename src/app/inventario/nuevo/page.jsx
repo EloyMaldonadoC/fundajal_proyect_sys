@@ -168,7 +168,6 @@ function NewProduct() {
     if (
       provNombre != "" &&
       provDireccion != "" &&
-      provContacto != "" &&
       provMunicipio != "" &&
       provEstado != "" &&
       provRFC != ""

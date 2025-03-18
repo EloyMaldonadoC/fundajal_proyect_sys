@@ -142,7 +142,7 @@ function SeleccionarVehiculos({ id, lista, vehiculosSeleccionados, validar }) {
                     <>
                       {vehiculos.map((vehiculo, index) => (
                         <option value={vehiculo.ve_id} key={index}>
-                          {vehiculo.ve_marca} {vehiculo.ve_modelo}
+                          {vehiculo.ve_marca} {vehiculo.ve_modelo} {vehiculo.ve_ano}
                         </option>
                       ))}
                     </>
