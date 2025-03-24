@@ -1,4 +1,5 @@
-import { use, useEffect, useState } from "react";
+"use client"
+import { useEffect, useState } from "react";
 import styles from "./module/TablaVisualizarProductos.module.css";
 import CheckBoxCargado from "./CheckBoxCargado";
 import { sumarProductos } from "@/functions/utilsFormat";
