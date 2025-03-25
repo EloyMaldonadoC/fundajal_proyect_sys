@@ -68,8 +68,7 @@ function TablaVisualizarProductos({
       setGlobal(productoEstado);
       setFiltrado(productoEstado);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productoEstado]);
+  }, [productoEstado, productos, paquetes, id]);
 
   const onSelect = (value) => {
     const nuevo = filtrado.map((producto) =>

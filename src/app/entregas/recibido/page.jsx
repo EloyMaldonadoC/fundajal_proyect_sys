@@ -1387,7 +1387,7 @@ function Recibido() {
             />
           </div>
           {mostrarVentasIndividuales && (
-            <div className={styles.scrollable}>
+            <div>
               {listaDevueltos.length != 0 && (
                 <VentaIndividual
                   listaDevueltos={listaDevueltos}
@@ -1402,7 +1402,7 @@ function Recibido() {
             </div>
           )}
           {mostrarProductosIndividuales && (
-            <div className={styles.scrollable}>
+            <div>
               {mostrarDevoluciones && (
                 <div className={styles.menuDevolucion}>
                   <div>
@@ -1496,7 +1496,7 @@ function Recibido() {
             </div>
           )}
           {mostrarTotalProductos && (
-            <div className={styles.scrollable}>
+            <div>
               <VisualizarTotalProductos productos={listaProductos} />
               {listaDevueltos.length != 0 && (
                 <TablaEstadosEntrega
