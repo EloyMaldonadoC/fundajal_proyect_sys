@@ -397,6 +397,16 @@ function Preparacion() {
       router.push(`/entregas`);
     }
   };
+  const handleEdit = async () => {
+    await fetch(`/api/entregas/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ en_estado: "en edición" }),
+    })
+    router.push(`/entregas/entrega?id=${id}`);
+  }
 
   if (loading)
     return (
@@ -439,6 +449,13 @@ function Preparacion() {
           </p>
         )}
         <div>
+          {session.user.role === "Administrador" && (
+            <Button
+              text={"Editar"}
+              type={"contenido-dark"}
+              onPress={() => handleEdit()}
+            />
+          )}
           <Button
             text={"Terminado"}
             type={""}
