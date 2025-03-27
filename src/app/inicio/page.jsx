@@ -110,6 +110,7 @@ function Inicio() {
         window.innerHeight || document.documentElement.clientHeight;
       if (scrollTop + clientHeight >= scrollHeight - 5) {
         const control = controlScrollLoad();
+        console.log(control);
         if (control) {
           setPage(page + 1);
         }
@@ -119,7 +120,7 @@ function Inicio() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [entregas]);
 
   const controlScrollLoad = () => {
     if (entregas.length - page * limit < 10) {

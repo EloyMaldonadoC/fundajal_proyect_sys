@@ -3,7 +3,7 @@ import { connection } from "@/libs/mysql";
 
 export async function GET() {
   try {
-    const result = await connection.query("SELECT * FROM clientes");
+    const result = await connection.query("SELECT * FROM clientes ORDER BY cli_municipio ASC");
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 });
