@@ -107,7 +107,7 @@ function SeleccionarVehiculos({ id, lista, vehiculosSeleccionados, validar }) {
                 <>
                   {vehiculos.map((vehiculo, index) => (
                     <option key={index} value={vehiculo.ve_id}>
-                      {vehiculo.ve_marca} {vehiculo.ve_modelo} {vehiculo.ve_ano} {vehiculo.ve_palancas}
+                      {vehiculo.ve_marca} {vehiculo.ve_modelo} {vehiculo.ve_ano} {vehiculo.ve_propietario}
                     </option>
                   ))}
                 </>
@@ -142,7 +142,7 @@ function SeleccionarVehiculos({ id, lista, vehiculosSeleccionados, validar }) {
                     <>
                       {vehiculos.map((vehiculo, index) => (
                         <option value={vehiculo.ve_id} key={index}>
-                          {vehiculo.ve_marca} {vehiculo.ve_modelo} {vehiculo.ve_ano}
+                          {vehiculo.ve_marca} {vehiculo.ve_modelo} {vehiculo.ve_ano} {vehiculo.ve_propietario}
                         </option>
                       ))}
                     </>
