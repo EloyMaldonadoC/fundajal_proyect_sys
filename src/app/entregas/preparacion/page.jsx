@@ -405,6 +405,13 @@ function Preparacion() {
       },
       body: JSON.stringify({ en_estado: "en edición" }),
     })
+    await fetch(`/api/entregas/productos/status/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ en_id: id }),
+    })
     router.push(`/entregas/entrega?id=${id}`);
   }
 
