@@ -177,7 +177,7 @@ function TablaHistorialProductos() {
         hist_estado: "salida",
         hist_cantidad: cantidad,
         hist_precio_ent_sal: producto.produc_precio_venta,
-        hist_motivo: opcionSeleccionada == 1 ? "venta individual" : opcionSeleccionada == 2 ? "dañado" : "no encontrado",
+        hist_motivo: opcionSeleccionada == 1 ? "venta individual" : opcionSeleccionada == 2 ? "dañado" : opcionSeleccionada == 3 ? "no encontrado" : "garantía",
         hist_dia: now.toISOString().split("T")[0],
         hist_hora: obtenerHoraActual(),
       }),
@@ -214,6 +214,7 @@ function TablaHistorialProductos() {
             <option value={1}>venta individual</option>
             <option value={2}>dañado</option>
             <option value={3}>no encontrado</option>
+            <option value={4}>garantía</option>
           </select>
           <label>Seleccionar producto: </label>
           <select
