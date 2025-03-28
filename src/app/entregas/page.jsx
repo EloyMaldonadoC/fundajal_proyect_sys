@@ -99,7 +99,7 @@ export default function Entregas() {
       );
       setTotalEnProceso(
         entregas.filter(
-          (entrega) => (entrega.entrega.en_estado == "recibir") || (entrega.entrega.en_estado == "recibido")
+          (entrega) => entrega.entrega.en_estado == ("recibir" || "recibido")
         )
       );
     }
