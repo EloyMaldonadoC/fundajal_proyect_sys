@@ -109,10 +109,6 @@ function Historial() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [controlScrollLoad]);
 
-  const obtenerHistorialEntregas = () => {
-    
-  };
-
   if (loading) {
     return (
       <div className={styles.loadingScreen}>

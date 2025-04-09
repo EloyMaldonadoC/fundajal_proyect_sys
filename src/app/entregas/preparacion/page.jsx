@@ -12,7 +12,7 @@ import { Alert, Button, Modal } from "@/components/input/InputComponents";
 import IonIcon from "@reacticons/ionicons";
 import { useSession } from "next-auth/react";
 import LoadingData from "@/components/LoadingData";
-import { obtenerHoraActual } from "@/functions/utilsFormat";
+import { obtenerDiaActual, obtenerHoraActual } from "@/functions/utilsFormat";
 
 const getDayOfWeek = (dateString) => {
   if (dateString != null) {
@@ -352,7 +352,7 @@ function Preparacion() {
           hist_cantidad: producto.en_es_produc_cant,
           hist_precio_ent_sal: producto.produc_precio_venta,
           hist_hora: obtenerHoraActual(),
-          hist_dia: now.toISOString().split("T")[0],
+          hist_dia: obtenerDiaActual(),
           hist_motivo: "entrega",
         };
       });

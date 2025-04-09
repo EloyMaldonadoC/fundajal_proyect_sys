@@ -1,6 +1,6 @@
 import { useState, useEffect, use } from "react";
 import styles from "./module/TablaHistorialProductos.module.css";
-import { formatNumber, obtenerHoraActual } from "@/functions/utilsFormat";
+import { formatNumber, obtenerDiaActual, obtenerHoraActual } from "@/functions/utilsFormat";
 import TablaHistorial from "./TablaHistorial";
 import TablaProveedores from "./TablaProveedores";
 import { Button, Modal, Select } from "../input/InputComponents";
@@ -145,7 +145,6 @@ function TablaHistorialProductos() {
   }, [productoModificado]);
 
   const removerInventario = async () => {
-    const now = new Date();
     const producto = productos.find(
       (producto) => producto.produc_id == productoSelecionado
     );
@@ -178,7 +177,7 @@ function TablaHistorialProductos() {
         hist_cantidad: cantidad,
         hist_precio_ent_sal: producto.produc_precio_venta,
         hist_motivo: opcionSeleccionada == 1 ? "venta individual" : opcionSeleccionada == 2 ? "dañado" : opcionSeleccionada == 3 ? "no encontrado" : "garantía",
-        hist_dia: now.toISOString().split("T")[0],
+        hist_dia: obtenerDiaActual(),
         hist_hora: obtenerHoraActual(),
       }),
     }).then((response) => {

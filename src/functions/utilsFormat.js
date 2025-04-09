@@ -74,6 +74,19 @@ function obtenerHoraActual() {
   return horas + ':' + minutos + ':' + segundos;
 }
 
+function obtenerDiaActual() {
+  var ahora = new Date();
+  var dia = ahora.getDate();
+  var mes = ahora.getMonth() + 1; // Los meses son indexados desde 0
+  var anio = ahora.getFullYear();
+
+  // Añadir un cero delante si es necesario
+  dia = dia < 10 ? '0' + dia : dia;
+  mes = mes < 10 ? '0' + mes : mes;
+
+  return anio + '-' + mes + '-' + dia;
+}
+
 function sumarProductos(lista) {
   let suma = 0;
   lista.forEach((producto) => {
@@ -82,4 +95,4 @@ function sumarProductos(lista) {
   return suma;
 }
 
-export { formatNumber, getDayOfWeek, formatTimeWithoutSeconds, formatDay, obtenerHoraActual, sumarProductos };
+export { formatNumber, getDayOfWeek, formatTimeWithoutSeconds, formatDay, obtenerHoraActual, obtenerDiaActual, sumarProductos };
