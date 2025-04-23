@@ -20,6 +20,14 @@ export default function Home({ children }) {
     if (status === 'unauthenticated') {
       router.push('/iniciar-sesion'); // Redirige a la página de inicio de sesión si no está autenticado
     }
+    //Verificar inventario
+    fetch('/api/inventario/verificarInventario').then((res) => {
+      if (res.status === 200) {
+        console.log("El inventario se verificó correctamente");
+      } else {
+        console.log("Error al verificar el inventario");
+      }
+    })
   }, [status, router]);
 
   const handleButtonClick = () => {
@@ -49,7 +57,7 @@ export default function Home({ children }) {
                         <li><button onClick={() => { router.push('/entregas') }}><p>Entregas</p><IonIcon name="calendar" size="medium"/></button></li>
                       )}
                       {(session.user.role === 'Administrador' || session.user.role === 'Oficina') && (
-                        <li><button onClick={() => { router.push('/inventario') }}><p>Inventario</p><IonIcon name="server" size="medium"/></button></li>
+                        <li><button onClick={() => { router.push('/inventario') }}><p>Inventario</p><IonIcon name="list" size="medium"/></button></li>
                       )}
                       {(session.user.role === 'Administrador' || session.user.role === 'Oficina') && (
                         <li><button onClick={() => { router.push('/paquetes') }}><p>Paquetes</p><IonIcon name="cube" size="medium"/></button></li>
@@ -63,6 +71,7 @@ export default function Home({ children }) {
                       {(session.user.role === 'Administrador' || session.user.role === 'Oficina') && (
                         <li><button onClick={() => { router.push('/historial') }}><p>Historial</p><IonIcon name="stats-chart" size="medium"/></button></li>
                       )}
+                      
                     </ul>
                   </nav>
                     <div className={`${styles.userUI} ${isOpen ? styles.expand : styles.collapse}`} onClick={() => { setIsOpen(!isOpen); console.log(isOpen) }}>

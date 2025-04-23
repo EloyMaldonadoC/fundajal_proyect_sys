@@ -7,7 +7,7 @@ import LoadingScreen from "@/components/LoadingScreen";
 import { Button, Input, Modal } from "@/components/input/InputComponents";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { obtenerHoraActual } from "@/functions/utilsFormat";
+import { obtenerDiaActual, obtenerHoraActual } from "@/functions/utilsFormat";
 import LoadingData from "@/components/LoadingData";
 
 const generateID = () => {
@@ -61,7 +61,10 @@ function NewProduct() {
   const [showModalFinaly, setShowModalFinaly] = useState(false);
 
   useEffect(() => {
-    if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
+    if (
+      session.user.role === "Administrador" ||
+      session.user.role === "Oficina"
+    ) {
       fetch(`/api/proveedores`)
         .then((respose) => {
           if (!respose.ok) {
@@ -195,7 +198,17 @@ function NewProduct() {
   };
   const finalizarRegistro = async () => {
     setLoadingData(true);
-    //Agregar proveedor
+    //Verificar si existe inventario
+    await fetch(`/api/inventario/verificarInventario`)
+      .then((respose) => {
+        if (!respose.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return respose.json();
+      })
+      .then((data) => {
+        console.log(data);
+      });
     if (!existeProveedor) {
       const proveedor = {
         prov_id: provId,
@@ -226,8 +239,17 @@ function NewProduct() {
         produc_nombre: producNombre,
         produc_precio_venta: producPrecio,
         produc_existencias: histCantidad,
-        produc_parti_fun: producComisionFundacion == "" ? 0 : producComisionFundacion,
-        produc_parti_enlace: producComisionEnlace == "" ? 0 : producComisionEnlace,
+        produc_parti_fun:
+          producComisionFundacion == "" ? 0 : producComisionFundacion,
+        produc_parti_enlace:
+          producComisionEnlace == "" ? 0 : producComisionEnlace,
+      };
+      const inventario = {
+        produc_id: producId,
+        inv_cantidad: histCantidad,
+        inv_cantidad_inicio: histCantidad,
+        inv_salidas: 0,
+        inv_entradas: histCantidad,
       };
       const response = await fetch(`/api/productos`, {
         method: "POST",
@@ -242,6 +264,19 @@ function NewProduct() {
       } else {
         console.log("Error al agregar producto");
       }
+
+      const responseInventario = await fetch(`/api/inventario/semanal`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inventario),
+      });
+      if (responseInventario.ok) {
+        console.log("Inventario agregado");
+      } else {
+        console.log("Error al agregar inventario");
+      }
     } else {
       const response = await fetch(`/api/productos/${producId}`, {
         method: "PUT",
@@ -249,13 +284,37 @@ function NewProduct() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          produc_existencias: Number(productoSeleccionado.produc_existencias) + Number(histCantidad),
+          produc_existencias:
+            Number(productoSeleccionado.produc_existencias) +
+            Number(histCantidad),
         }),
       });
       if (response.ok) {
         console.log("Producto actualizado");
       } else {
         console.log("Error al actualizar producto");
+      }
+      const historial = {
+        produc_id: producId,
+        hist_estado: "Entrada",
+        hist_cantidad: histCantidad,
+        hist_motivo: "Adquisición",
+        hist_precio_ent_sal: histPrecio,
+        hist_hora: obtenerHoraActual(),
+        hist_dia: obtenerDiaActual(),
+      };
+      const responseInventario = await fetch(`/api/inventario/semanal`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(historial),
+      });
+
+      if (responseInventario.ok) {
+        console.log("Inventario actualizado");
+      } else {
+        console.log("Error al actualizar inventario");
       }
     }
     //Agregar proveedor producto
@@ -279,7 +338,6 @@ function NewProduct() {
     }
     try {
       //Agregar inventario
-      const now = new Date();
       const historial = {
         produc_id: producId,
         hist_estado: "Entrada",
@@ -287,15 +345,15 @@ function NewProduct() {
         hist_motivo: "Adquisición",
         hist_precio_ent_sal: histPrecio,
         hist_hora: obtenerHoraActual(),
-        hist_dia: now.toISOString().split("T")[0],
+        hist_dia: obtenerDiaActual(),
       };
       const response = await fetch("/api/inventario/historial", {
         method: "POST",
         headers: {
-          "Content-Type" : "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(historial)
-      })
+        body: JSON.stringify(historial),
+      });
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

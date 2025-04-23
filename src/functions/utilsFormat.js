@@ -6,15 +6,15 @@ function formatNumber(number) {
     maximumFractionDigits: 2,
   });
 }
-function formatTimeWithoutSeconds (timeString) {
+function formatTimeWithoutSeconds(timeString) {
   if (timeString != null) {
     const [hours, minutes] = timeString.split(":");
     return `${hours}:${minutes}`;
   } else {
     return "Hora no especificada";
   }
-};
-function getDayOfWeek (dateString) {
+}
+function getDayOfWeek(dateString) {
   if (dateString != null) {
     const daysOfWeek = [
       "Domingo",
@@ -48,7 +48,7 @@ function getDayOfWeek (dateString) {
   } else {
     return "Aún no se ha programado una fecha de entrega";
   }
-};
+}
 
 function formatDay(day) {
   const dayformat = new Date(day).toLocaleDateString("es-ES", {
@@ -67,11 +67,11 @@ function obtenerHoraActual() {
   var segundos = ahora.getSeconds();
 
   // Añadir un cero delante si es necesario
-  horas = horas < 10 ? '0' + horas : horas;
-  minutos = minutos < 10 ? '0' + minutos : minutos;
-  segundos = segundos < 10 ? '0' + segundos : segundos;
+  horas = horas < 10 ? "0" + horas : horas;
+  minutos = minutos < 10 ? "0" + minutos : minutos;
+  segundos = segundos < 10 ? "0" + segundos : segundos;
 
-  return horas + ':' + minutos + ':' + segundos;
+  return horas + ":" + minutos + ":" + segundos;
 }
 
 function obtenerDiaActual() {
@@ -81,10 +81,76 @@ function obtenerDiaActual() {
   var anio = ahora.getFullYear();
 
   // Añadir un cero delante si es necesario
-  dia = dia < 10 ? '0' + dia : dia;
-  mes = mes < 10 ? '0' + mes : mes;
+  dia = dia < 10 ? "0" + dia : dia;
+  mes = mes < 10 ? "0" + mes : mes;
 
-  return anio + '-' + mes + '-' + dia;
+  return anio + "-" + mes + "-" + dia;
+}
+
+function obtenerLunesmondayeSemana(fecha) {
+  const date = new Date(fecha);
+  const dayOfWeek = date.getDay(); // Obtiene el día de la semana (0 = Domingo, 1 = Lunes, etc.)
+  const monday = new Date(date); // Copia la fecha original
+  monday.setDate(date.getDate() - (dayOfWeek - 1)); // Retrocede hasta el lunes (si ya es lunes, no cambia)
+  var dia = monday.getDate();
+  var mes = monday.getMonth() + 1; // Los meses son indexados desde 0
+  var anio = monday.getFullYear();
+
+  // Añadir un cero delante si es necesario
+  dia = dia < 10 ? "0" + dia : dia;
+  mes = mes < 10 ? "0" + mes : mes;
+
+  return anio + "-" + mes + "-" + dia;
+}
+function obtenerViernesDeSemana(fecha) {
+  const date = new Date(fecha);
+  const dayOfWeek = date.getDay(); // Obtiene el día de la semana (0 = Domingo, 1 = Lunes, etc.)
+  const friday = new Date(date); // Copia la fecha original
+  friday.setDate(date.getDate() + (5 - dayOfWeek) % 7); // Ajusta hasta el viernes
+  var dia = friday.getDate();
+  var mes = friday.getMonth() + 1; // Los meses son indexados desde 0
+  var anio = friday.getFullYear();
+
+  // Añadir un cero delante si es necesario
+  dia = dia < 10 ? "0" + dia : dia;
+  mes = mes < 10 ? "0" + mes : mes;
+
+  return anio + "-" + mes + "-" + dia;
+}
+
+function obtenerDomingoDeSemana(fecha) {
+  const date = new Date(fecha);
+  const dayOfWeek = date.getDay(); // Obtiene el día de la semana (0 = Domingo, 1 = Lunes, etc.)
+  const sunday = new Date(date); // Copia la fecha original
+  sunday.setDate(date.getDate() + (7 - dayOfWeek) % 7); // Ajusta hasta el domingo
+  var dia = sunday.getDate();
+  var mes = sunday.getMonth() + 1; // Los meses son indexados desde 0
+  var anio = sunday.getFullYear();
+
+  // Añadir un cero delante si es necesario
+  dia = dia < 10 ? "0" + dia : dia;
+  mes = mes < 10 ? "0" + mes : mes;
+
+  return anio + "-" + mes + "-" + dia;
+}
+
+function esDiaLaboral() {
+  const hoy = new Date();
+  const diaSemana = hoy.getDay(); // Obtiene el día de la semana (0 = domingo, 6 = sábado)
+  const horaActual = hoy.getHours(); // Obtiene la hora actual
+  console.log(hoy)
+  // Lógica para lunes después de las 9:00 a.m.
+  if (diaSemana === 1 && horaActual >= 9) {
+      return true;
+  }
+
+  // Lógica para viernes después de las 8:00 p.m.
+  if (diaSemana === 5 && horaActual >= 20) {
+      return false;
+  }
+
+  // Verifica si el día está entre martes (2) y jueves (4), o lunes antes de las 9 a.m., o viernes antes de las 8 p.m.
+  return diaSemana >= 1 && diaSemana <= 5;
 }
 
 function sumarProductos(lista) {
@@ -95,4 +161,16 @@ function sumarProductos(lista) {
   return suma;
 }
 
-export { formatNumber, getDayOfWeek, formatTimeWithoutSeconds, formatDay, obtenerHoraActual, obtenerDiaActual, sumarProductos };
+export {
+  formatNumber,
+  getDayOfWeek,
+  formatTimeWithoutSeconds,
+  formatDay,
+  obtenerHoraActual,
+  obtenerDiaActual,
+  sumarProductos,
+  obtenerLunesmondayeSemana,
+  obtenerDomingoDeSemana,
+  obtenerViernesDeSemana,
+  esDiaLaboral
+};

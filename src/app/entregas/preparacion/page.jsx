@@ -345,7 +345,6 @@ function Preparacion() {
     if (isSaved) {
       //Historial de salida
       const historial = totalProductos.map((producto) => {
-        const now = new Date();
         return {
           produc_id: producto.produc_id,
           hist_estado: "salida",

@@ -1,6 +1,10 @@
 import { useState, useEffect, use } from "react";
 import styles from "./module/TablaHistorialProductos.module.css";
-import { formatNumber, obtenerDiaActual, obtenerHoraActual } from "@/functions/utilsFormat";
+import {
+  formatNumber,
+  obtenerDiaActual,
+  obtenerHoraActual,
+} from "@/functions/utilsFormat";
 import TablaHistorial from "./TablaHistorial";
 import TablaProveedores from "./TablaProveedores";
 import { Button, Modal, Select } from "../input/InputComponents";
@@ -145,10 +149,27 @@ function TablaHistorialProductos() {
   }, [productoModificado]);
 
   const removerInventario = async () => {
+    await fetch("/api/historial/inventario/verificarInventario")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error al verificar inventario");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     const producto = productos.find(
       (producto) => producto.produc_id == productoSelecionado
     );
-    const nuevaCantidad = producto.produc_existencias - cantidad;
+    const nuevaCantidad =
+      opcionSeleccionada == 7
+        ? producto.produc_existencias + Number(cantidad) // Ajuste de inventario
+        : producto.produc_existencias - Number(cantidad); // Salida de inventario
+
     await fetch(`/api/productos/${productoSelecionado}`, {
       method: "PUT",
       headers: {
@@ -157,44 +178,80 @@ function TablaHistorialProductos() {
       body: JSON.stringify({
         produc_existencias: nuevaCantidad,
       }),
-    }).then((response) => {
-      if (!response.ok) {
-        throw new Error("Error al actualizar producto");
-      }
-      return response.json();
-    }).catch((error) => {
-      console.log(error);
-    });
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error al actualizar producto");
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     //generar historial
+    const historial = {
+      produc_id: productoSelecionado,
+      hist_estado:
+        opcionSeleccionada == 7 && cantidad > 0 ? "Entrada" : "salida",
+      hist_cantidad: Number(cantidad) < 0 ? -Number(cantidad) : Number(cantidad),
+      hist_precio_ent_sal: producto.produc_precio_venta,
+      hist_motivo:
+        opcionSeleccionada == 1
+          ? "venta individual"
+          : opcionSeleccionada == 2
+          ? "dañado"
+          : opcionSeleccionada == 3
+          ? "no encontrado"
+          : opcionSeleccionada == 4
+          ? "garantía"
+          : opcionSeleccionada == 5
+          ? "donación"
+          : opcionSeleccionada == 6
+          ? "devolución"
+          : "ajuste de inventario",
+      hist_dia: obtenerDiaActual(),
+      hist_hora: obtenerHoraActual(),
+    };
     await fetch(`/api/inventario/historial`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        produc_id: productoSelecionado,
-        hist_estado: "salida",
-        hist_cantidad: cantidad,
-        hist_precio_ent_sal: producto.produc_precio_venta,
-        hist_motivo: opcionSeleccionada == 1 ? "venta individual" : opcionSeleccionada == 2 ? "dañado" : opcionSeleccionada == 3 ? "no encontrado" : "garantía",
-        hist_dia: obtenerDiaActual(),
-        hist_hora: obtenerHoraActual(),
-      }),
-    }).then((response) => {
-      if (!response.ok) {
-        throw new Error("Error al generar historial");
-      }
-      return response.json();
-    }).catch((error) => {
-      console.log(error);
-    });
+      body: JSON.stringify(historial),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error al generar historial");
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //editar inventario semanal
+    await fetch(`/api/inventario/semanal`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(historial),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error al generar historial semanal");
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     setOpcionSeleccionada(0);
     setProductoSelecionado(0);
     setCantidad(0);
     setShowModal(false);
     setLoadingData(false);
     setProductoModificado(!productoModificado);
-  }
+  };
 
   return (
     <div>
@@ -207,6 +264,8 @@ function TablaHistorialProductos() {
             onChange={(event) => {
               setOpcionSeleccionada(event.target.value);
               console.log(event.target.value);
+              setCantidad(0);
+              setProductoSelecionado(0);
             }}
           >
             <option value={0}>--Seleccionar--</option>
@@ -214,6 +273,9 @@ function TablaHistorialProductos() {
             <option value={2}>dañado</option>
             <option value={3}>no encontrado</option>
             <option value={4}>garantía</option>
+            <option value={5}>donación</option>
+            <option value={6}>devolución</option>
+            <option value={7}>Ajuste de inventario</option>
           </select>
           <label>Seleccionar producto: </label>
           <select
@@ -243,7 +305,7 @@ function TablaHistorialProductos() {
             onChange={(event) => {
               setCantidad(event.target.value);
             }}
-            min={0}
+            min={opcionSeleccionada == 7 ? -maximo : 0}
             max={maximo}
             disabled={productoSelecionado == 0 ? true : false}
           />

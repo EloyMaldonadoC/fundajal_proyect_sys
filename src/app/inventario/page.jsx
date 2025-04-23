@@ -7,6 +7,7 @@ import { Table, Info, Search, Button } from "@/components/input/InputComponents"
 import { useSession } from "next-auth/react";
 import IonIcon from "@reacticons/ionicons";
 import Loading from "../loading";
+import { esDiaLaboral, obtenerDiaActual } from "@/functions/utilsFormat";
 
 function Inventario() {
   const { data: session, status } = useSession();
@@ -14,14 +15,17 @@ function Inventario() {
 
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState("");
-  const [restart, setRestart] = useState(false);
 
   const [productos, setProductos] = useState([]);
-  const [proveedor, setProveedor] = useState(null);
+  const [periodo, setPeriodo] = useState(null);
+  const [inventarios, setInventarios] = useState([]);
+  const [buscar, setBuscar] = useState("");
+  const [diaSeleccionado, setDiaSeleccionado] = useState(obtenerDiaActual());
+  const [deshabilitado, setDeshabilitado] = useState(true);
 
   useEffect(() => {
     if (session.user.role === "Administrador" || session.user.role === 'Oficina') {
-      fetch(`/api/productos`)
+      fetch(`api/inventario/semanal/${diaSeleccionado}`)
       .then((respose) => {
         if (!respose.ok) {
           throw new Error("Network response was not ok");
@@ -29,63 +33,46 @@ function Inventario() {
         return respose.json();
       })
       .then((data) => {
-        setProductos(data);
+        setProductos(data.inventario);
+        setPeriodo(data.periodo[0]);
+        console.log(data);
         setLoading(false);
       })
       .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+      fetch(`api/inventario/periodo`).then((respose) => {
+        if (!respose.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return respose.json();
+      }
+      ).then((data) => {
+        setInventarios(data);
+        console.log(data);
+        setLoading(false);
+      }).catch((error) => {
         setError(error);
         setLoading(false);
       });
     }else {
       router.push("/");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [restart, router]);
-
-  const handlePressSearch = (data) => {
-    if(data == '') {
-      return
+    if (esDiaLaboral) {
+      setDeshabilitado(false)
     }
-    fetch(`/api/inventario/busqueda/${data}`)
-      .then((respose) => {
-        if (!respose.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return respose.json();
-      })
-      .then((data) => {
-        setProductos(data);
-        setLoading(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router, diaSeleccionado]);
 
-        console.log(data);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
-  }
-  const handlePressSearchLaminas = () => {
-    console.log('laminas')
-    fetch(`/api/inventario/busqueda/lamina`)
-      .then((respose) => {
-        if (!respose.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return respose.json();
-      })
-      .then((data) => {
-        setProductos(data);
-        setLoading(false);
-
-        console.log(data);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
-  }
   const handlePressNew = () => {
-    router.push('/inventario/nuevo');
+    if (esDiaLaboral()) {
+      setDeshabilitado(false);
+      router.push("/inventario/nuevo");
+    } else {
+      setDeshabilitado(true);
+      console.log("No puedes hacer una nueva entrada el fin de semana");
+    }
   }
 
   if (loading) {
@@ -120,13 +107,13 @@ function Inventario() {
         </h4>
       </div>
       <div className={styles.busqueda}>
-        <Search placeholder={'Buscar Producto'} onSearch={(data) => {handlePressSearch(data)}}/>
-        <Button text={'Laminas'} type={'cancelar'} onPress={handlePressSearchLaminas}/>
-        <Button text={'Todos los productos'} type={'cancelar'} onPress={() => {setRestart(!restart)}}/>
-        <Button text={'Nueva entrada'} type={'cancelar'} onPress={handlePressNew}/>
+        <Search placeholder={'Buscar Producto'} onSearch={(data) => {setBuscar(data)}}/>
+        <input className={styles.calendario} type="date" value={diaSeleccionado} onChange={(e) => setDiaSeleccionado(e.target.value)}></input>
+        <Button text={'Laminas'} type={'cancelar'} onPress={() => setBuscar("lámina")}/>
+        <Button text={'Nueva entrada'} type={'cancelar'} onPress={handlePressNew} disabled={deshabilitado }/>
       </div>
       <div className={styles.container}>
-        <Table productos={productos} />
+        <Table productos={productos} periodo={periodo} busqueda={buscar}/>
       </div>
     </div>
   );
