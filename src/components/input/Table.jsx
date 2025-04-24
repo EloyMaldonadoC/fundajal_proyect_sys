@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TablaProveedores from "../componentesHistorial/TablaProveedores";
 import styles from "./module/Table.module.css";
-import { formatDay, formatNumber } from "@/functions/utilsFormat";
+import { esDiaDentroDeSemana, formatDay, formatNumber, obtenerLunesmondayeSemana } from "@/functions/utilsFormat";
 import { Button } from "./InputComponents";
 import { useRouter } from "next/navigation";
 
@@ -38,7 +38,7 @@ function Fila({ producto, busqueda }) {
         <div className={styles.inicioSemana}> {producto.inv_cantidad_inicio}</div>
         <div className={styles.entradas}> {producto.inv_entradas}</div>
         <div className={styles.salidas}> {producto.inv_salidas}</div>
-        <div className={styles.existencias}>{producto.produc_existencias}</div>
+        <div className={styles.existencias}>{producto.inv_cantidad}</div>
         <div className={styles.precio}>
           {formatNumber(producto.produc_precio_venta)}
         </div>
@@ -76,7 +76,7 @@ function Table({ productos, busqueda, periodo }) {
         <h3 className={styles.inicioSemana}>Inicio de Semana</h3>
         <h3 className={styles.entradas}>Entradas</h3>
         <h3 className={styles.salidas}>Salidas</h3>
-        <h3 className={styles.existencias}>Existencias</h3>
+        <h3 className={styles.existencias}>{periodo && (esDiaDentroDeSemana(periodo.per_inicio_semana) ? "Existencias" : "Corte")}</h3>
         <h3 className={styles.precio}>Precio de Venta</h3>
         <h3 className={styles.participacion}>Particion municipio</h3>
       </div>

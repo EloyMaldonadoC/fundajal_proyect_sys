@@ -134,6 +134,22 @@ function obtenerDomingoDeSemana(fecha) {
   return anio + "-" + mes + "-" + dia;
 }
 
+function esDiaDentroDeSemana(fecha) {
+  const fechaDada = fecha.split("T")[0]; // Obtener solo la fecha sin la hora
+  console.log("fechaDada", fechaDada)
+  // Obtener la fecha actual
+  const hoy = new Date();
+  // Obtener el lunes de esta semana
+  const diaSemana = hoy.getDay();
+  const lunes = new Date(hoy);
+  lunes.setDate(hoy.getDate() - (diaSemana === 0 ? 6 : diaSemana - 1));
+  const lunesEstaSemana = lunes.toISOString().split("T")[0]; // Obtener solo la fecha sin la hora
+  console.log("lunesEstaSemana", lunesEstaSemana);
+  
+  // Comparar si la fecha proporcionada está dentro del rango
+  return fechaDada == lunesEstaSemana;
+}
+
 function esDiaLaboral() {
   const hoy = new Date();
   const diaSemana = hoy.getDay(); // Obtiene el día de la semana (0 = domingo, 6 = sábado)
@@ -172,5 +188,6 @@ export {
   obtenerLunesmondayeSemana,
   obtenerDomingoDeSemana,
   obtenerViernesDeSemana,
+  esDiaDentroDeSemana,
   esDiaLaboral
 };
