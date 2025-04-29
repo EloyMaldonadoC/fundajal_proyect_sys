@@ -166,7 +166,7 @@ function TablaHistorialProductos() {
       (producto) => producto.produc_id == productoSelecionado
     );
     const nuevaCantidad =
-      opcionSeleccionada == 7
+      opcionSeleccionada > 5 // Entrada de inventario
         ? producto.produc_existencias + Number(cantidad) // Ajuste de inventario
         : producto.produc_existencias - Number(cantidad); // Salida de inventario
 
@@ -192,7 +192,19 @@ function TablaHistorialProductos() {
     const historial = {
       produc_id: productoSelecionado,
       hist_estado:
-        opcionSeleccionada == 7 && cantidad > 0 ? "Entrada" : "salida",
+      opcionSeleccionada == 1
+      ? "salida"
+      : opcionSeleccionada == 2
+      ? "salida"
+      : opcionSeleccionada == 3
+      ? "salida"
+      : opcionSeleccionada == 4
+      ? "salida"
+      : opcionSeleccionada == 5
+      ? "salida"
+      : opcionSeleccionada == 6
+      ? "Entrada"
+      : "Entrada",
       hist_cantidad: Number(cantidad) < 0 ? -Number(cantidad) : Number(cantidad),
       hist_precio_ent_sal: producto.produc_precio_venta,
       hist_motivo:
@@ -306,8 +318,8 @@ function TablaHistorialProductos() {
               setCantidad(event.target.value);
             }}
             min={opcionSeleccionada == 7 ? -maximo : 0}
-            max={maximo}
             disabled={productoSelecionado == 0 ? true : false}
+            max={opcionSeleccionada > 5 ? 9999 : maximo}
           />
         </div>
         <div>
