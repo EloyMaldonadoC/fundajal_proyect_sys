@@ -25,7 +25,7 @@ export default function Entregas() {
 
   const [paginaActual, setPaginaActual] = useState(0);
   const [total, setTotal] = useState([]);
-  const [totalPorPagina, setTotalPorPagina] = useState(10);
+  const [totalPorPagina, setTotalPorPagina] = useState(30);
 
   const [totalPendientes, setTotalPendientes] = useState([]);
   const [totalEnEdicion, setTotalEnEdicion] = useState([]);

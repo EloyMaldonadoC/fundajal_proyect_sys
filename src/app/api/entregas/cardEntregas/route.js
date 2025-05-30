@@ -5,7 +5,7 @@ export async function GET(req) {
   try {
     const url = new URL(req.url);
     const page = url.searchParams.get("page") || 1;
-    const limit = url.searchParams.get("limit") || 10;
+    const limit = url.searchParams.get("limit") || 30;
     const filter = url.searchParams.get("filter") || null;
     const user = url.searchParams.get("user") || null;
 
