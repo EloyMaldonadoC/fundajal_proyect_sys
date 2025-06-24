@@ -21,10 +21,9 @@ export async function GET(req) {
         entrega_vehiculo,
         empleado_entraga,
       ] = await connection.query(
-        `SELECT e.*
-          FROM (SELECT DISTINCT en_id FROM empleado_entraga) ee
-          JOIN entregas e ON ee.en_id = e.en_id
-          ORDER BY e.en_dia_entrega DESC LIMIT ${limit} OFFSET ${offset};
+        `SELECT * FROM entregas
+          ORDER BY CASE WHEN entregas.en_dia_entrega IS NULL THEN 0 ELSE 1 END,
+          entregas.en_dia_entrega DESC LiMIT ${limit} OFFSET ${offset};
           
           SELECT * FROM vehiculos;
     
@@ -68,7 +67,9 @@ export async function GET(req) {
         `SELECT *
           FROM entregas
           WHERE emp_id = ${user}
-          ORDER BY entregas.en_dia_entrega DESC LIMIT ${limit} OFFSET ${offset};
+          ORDER BY CASE WHEN entregas.en_dia_entrega IS NULL THEN 0 ELSE 1 END,
+          entregas.en_dia_entrega DESC
+          LIMIT ${limit} OFFSET ${offset};
           
           SELECT * FROM vehiculos;
     
@@ -113,7 +114,9 @@ export async function GET(req) {
         FROM empleado_entraga
         JOIN entregas ON empleado_entraga.en_id = entregas.en_id
         WHERE empleado_entraga.emp_id = ${user}
-        ORDER BY entregas.en_dia_entrega DESC LIMIT ${limit} OFFSET ${offset};
+        ORDER BY CASE WHEN entregas.en_dia_entrega IS NULL THEN 0 ELSE 1 END,
+        entregas.en_dia_entrega DESC
+        LIMIT ${limit} OFFSET ${offset};
 
         SELECT * FROM vehiculos;
 
