@@ -8,6 +8,7 @@ import LoadingScreen from "@/components/LoadingScreen";
 import CardEntrega from "@/components/componentesEntrega/principal/CardEntrega";
 import IonIcon from "@reacticons/ionicons";
 import { useSession } from "next-auth/react";
+import { obtenerDiaActual } from "@/functions/utilsFormat";
 
 export default function Entregas() {
   const { data: session, status } = useSession();
@@ -31,6 +32,7 @@ export default function Entregas() {
   const [totalEnEdicion, setTotalEnEdicion] = useState([]);
   const [totalPreparados, setTotalPreparados] = useState([]);
   const [totalEnProceso, setTotalEnProceso] = useState([]);
+  const [recibidos, setRecibidos] = useState([]);
   const [totalFinalizadas, setTotalFinalizadas] = useState([]);
   const [totalCanceladas, setTotalCanceladas] = useState([]);
 
@@ -39,8 +41,12 @@ export default function Entregas() {
   const [filtrarPorEnEdicion, setFiltrarPorEnEdicion] = useState(false);
   const [filtrarPorPreparados, setFiltrarPorPreparados] = useState(false);
   const [filtrarPorEnProceso, setFiltrarPorEnProceso] = useState(false);
+  const [filtrarPorRecibidos, setFiltrarPorRecibidos] = useState(false);
   const [filtrarPorFinalizadas, setFiltrarPorFinalizadas] = useState(false);
   const [filtrarPorCanceladas, setFiltrarPorCanceladas] = useState(false);
+
+  const [diaSeleccionado, setDiaSeleccionado] = useState(obtenerDiaActual());
+  const [modo, setModo] = useState("mes");
 
   useEffect(() => {
     console.log("se renderiza");
@@ -55,7 +61,7 @@ export default function Entregas() {
           paginaActual + 1
         }&limit=${totalPorPagina}${estado ? `&filter=${estado}` : ""}${
           session.user.role === "Encargado" ? `&user=${session.user.id}` : ""
-        }`
+        }${modo ? `&filtro_fecha=${diaSeleccionado}&modo=${modo}` : ""}`
       )
         .then((response) => {
           if (!response.ok) {
@@ -65,6 +71,11 @@ export default function Entregas() {
         })
         .then((data) => {
           setLoading(false);
+          console.log(`/api/entregas/cardEntregas?page=${
+          paginaActual + 1
+        }&limit=${totalPorPagina}${estado ? `&filter=${estado}` : ""}${
+          session.user.role === "Encargado" ? `&user=${session.user.id}` : ""
+        }${modo ? `&filtro_fecha=${diaSeleccionado}&modo=${modo}` : ""}`);
           setEntregas([...entregas, ...data]);
         })
         .catch((error) => {
@@ -75,13 +86,15 @@ export default function Entregas() {
       router.push("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paginaActual, estado]);
+  }, [paginaActual, estado, modo, diaSeleccionado]);
 
   useEffect(() => {
     if (entregas) {
       setTotal(entregas);
       setTotalPendientes(
-        entregas.filter((entrega) => entrega.entrega.en_dia_entrega === null)
+        entregas.filter(
+          (entrega) => entrega.entrega.en_estado === "por confirmar"
+        )
       );
       setTotalEnEdicion(
         entregas.filter((entrega) => entrega.entrega.en_estado == "en edición")
@@ -98,9 +111,10 @@ export default function Entregas() {
         entregas.filter((entrega) => entrega.entrega.en_estado === "cancelada")
       );
       setTotalEnProceso(
-        entregas.filter(
-          (entrega) => entrega.entrega.en_estado === "recibir"
-        )
+        entregas.filter((entrega) => entrega.entrega.en_estado === "recibir")
+      );
+      setRecibidos(
+        entregas.filter((entrega) => entrega.entrega.en_estado === "recibido")
       );
     }
   }, [entregas, estado]);
@@ -130,7 +144,7 @@ export default function Entregas() {
       setFiltrarPorTodos(false);
       setFiltrarPorEnProceso(true);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const controlScrollLoad = () => {
@@ -149,6 +163,7 @@ export default function Entregas() {
     setFiltrarPorFinalizadas(false);
     setFiltrarPorEnProceso(false);
     setFiltrarPorCanceladas(false);
+    setFiltrarPorRecibidos(false);
   };
   const controlarFiltroPendientes = () => {
     setFiltrarPorTodos(false);
@@ -158,6 +173,7 @@ export default function Entregas() {
     setFiltrarPorFinalizadas(false);
     setFiltrarPorEnProceso(false);
     setFiltrarPorCanceladas(false);
+    setFiltrarPorRecibidos(false);
   };
   const controlarFiltroEnEdicion = () => {
     setFiltrarPorTodos(false);
@@ -167,6 +183,7 @@ export default function Entregas() {
     setFiltrarPorFinalizadas(false);
     setFiltrarPorEnProceso(false);
     setFiltrarPorCanceladas(false);
+    setFiltrarPorRecibidos(false);
   };
   const controlarFiltroPreparado = () => {
     setFiltrarPorTodos(false);
@@ -176,6 +193,7 @@ export default function Entregas() {
     setFiltrarPorFinalizadas(false);
     setFiltrarPorEnProceso(false);
     setFiltrarPorCanceladas(false);
+    setFiltrarPorRecibidos(false);
   };
   const controlarFiltroFinalizadas = () => {
     setFiltrarPorTodos(false);
@@ -185,6 +203,7 @@ export default function Entregas() {
     setFiltrarPorFinalizadas(true);
     setFiltrarPorEnProceso(false);
     setFiltrarPorCanceladas(false);
+    setFiltrarPorRecibidos(false);
   };
   const controlarFiltroCanceladas = () => {
     setFiltrarPorTodos(false);
@@ -203,6 +222,17 @@ export default function Entregas() {
     setFiltrarPorFinalizadas(false);
     setFiltrarPorCanceladas(false);
     setFiltrarPorEnProceso(true);
+    setFiltrarPorRecibidos(false);
+  };
+  const controlarFiltroRecibidos = () => {
+    setFiltrarPorTodos(false);
+    setFiltrarPorPendientes(false);
+    setFiltrarPorEnEdicion(false);
+    setFiltrarPorPreparados(false);
+    setFiltrarPorFinalizadas(false);
+    setFiltrarPorCanceladas(false);
+    setFiltrarPorEnProceso(false);
+    setFiltrarPorRecibidos(true);
   };
 
   if (loading)
@@ -240,10 +270,57 @@ export default function Entregas() {
             placeholder={"Filtrar por municipio"}
             onSearch={(data) => setBuscarMunicipio(data)}
           />
-          <Search
+          {session.user.role !== "Encargado" && (
+            <Search
             placeholder={"Filtrar por encargado"}
             onSearch={(data) => setBucarEncargado(data)}
           />
+          )}
+          <div className={styles.calendario}>
+            <label >Filtrar por:</label>
+            <Button
+              text={"Todos"}
+              type={modo == null ? "cancelar" : ""}
+              onPress={() => {
+                setModo(null);
+                setPaginaActual(0);
+                setEntregas([]);
+              }}
+            />
+            <Button
+              text={"Día"}
+              type={modo === "dia" ? "cancelar" : ""}
+              onPress={() => {
+                setModo("dia");
+                setPaginaActual(0);
+                setEntregas([]);
+              }}
+            />
+            <Button
+              text={"Semana"}
+              type={modo === "semana" ? "cancelar" : ""}
+              onPress={() => {
+                setModo("semana");
+                setPaginaActual(0);
+                setEntregas([]);
+              }}
+            />
+            <Button
+              text={"Mes"}
+              type={modo === "mes" ? "cancelar" : ""}
+              onPress={() => {
+                setModo("mes");
+                setPaginaActual(0);
+                setEntregas([]);
+              }}
+            />
+            <input
+              className={styles.fecha}
+              type="date"
+              value={diaSeleccionado}
+              onChange={(e) => {setDiaSeleccionado(e.target.value); setPaginaActual(0); setEntregas([]);}}
+            ></input> 
+          </div>
         </div>
         <div className={styles.filtro}>
           <div className={styles.ajustarfiltro}>
@@ -304,7 +381,7 @@ export default function Entregas() {
                   if (!filtrarPorPreparados) {
                     setPaginaActual(0);
                     setEntregas([]);
-                    setEstado("preparación");
+                    setEstado("%preparación%");
                   }
                   controlarFiltroPreparado();
                 }}
@@ -313,18 +390,32 @@ export default function Entregas() {
             {(session.user.role === "Administrador" ||
               session.user.role === "Encargado" ||
               session.user.role === "Chofer") && (
-              <Button
-                text={"En Proceso"}
-                type={filtrarPorEnProceso ? "cancelar" : ""}
-                onPress={() => {
-                  if (!filtrarPorEnProceso) {
-                    setPaginaActual(0);
-                    setEntregas([]);
-                    setEstado("%reci%");
-                  }
-                  controlarFiltroEnProceso();
-                }}
-              />
+              <>
+                <Button
+                  text={"En Proceso"}
+                  type={filtrarPorEnProceso ? "cancelar" : ""}
+                  onPress={() => {
+                    if (!filtrarPorEnProceso) {
+                      setPaginaActual(0);
+                      setEntregas([]);
+                      setEstado("%recibir%");
+                    }
+                    controlarFiltroEnProceso();
+                  }}
+                />
+                <Button
+                  text={"Recibir"}
+                  type={filtrarPorRecibidos ? "cancelar" : ""}
+                  onPress={() => {
+                    if (!filtrarPorRecibidos) {
+                      setPaginaActual(0);
+                      setEntregas([]);
+                      setEstado("%recibido%");
+                    }
+                    controlarFiltroRecibidos();
+                  }}
+                />
+              </>
             )}
             {session.user.role === "Administrador" && (
               <Button
@@ -342,15 +433,14 @@ export default function Entregas() {
             )}
           </div>
           {(session.user.role === "Administrador" ||
-            session.user.role === "Encargado"
-          ) && (
+            session.user.role === "Encargado") && (
             <Button
-            text={"Nueva Entrega"}
-            type={"cancelar"}
-            onPress={() => {
-              router.push("/entregas/nuevo");
-            }}
-          />
+              text={"Nueva Entrega"}
+              type={"cancelar"}
+              onPress={() => {
+                router.push("/entregas/nuevo");
+              }}
+            />
           )}
         </div>
       </div>
@@ -530,7 +620,50 @@ export default function Entregas() {
                       <CardEntrega
                         entrega={entrega}
                         disabled={
-                          (session.user.role === "Administrador" || session.user.role === "Chofer" || session.user.role === 'Encargado') ? true : false
+                          session.user.role === "Administrador" ||
+                          session.user.role === "Chofer" ||
+                          session.user.role === "Encargado"
+                            ? true
+                            : false
+                        }
+                      />
+                    </div>
+                  ))}
+              </div>
+            ) : (
+              <div className={styles.errorContent}>
+                <h1 className={styles.textError}>Aún no hay entregas</h1>
+              </div>
+            )}
+          </>
+        )}
+        {filtrarPorRecibidos && (
+          <>
+            <div className={styles.banner}>
+              <h3>Recibir</h3>
+            </div>
+            {recibidos.length != 0 ? (
+              <div>
+                {recibidos
+                  .filter(
+                    (entrega) =>
+                      entrega.cliente.cli_municipio
+                        .toLowerCase()
+                        .includes(buscarMunicipio.toLowerCase()) &&
+                      entrega.encargado.emp_nombre
+                        .toLowerCase()
+                        .includes(bucarEncargado.toLowerCase())
+                  )
+                  .map((entrega, key) => (
+                    <div key={key}>
+                      <CardEntrega
+                        entrega={entrega}
+                        disabled={
+                          session.user.role === "Administrador" ||
+                          session.user.role === "Chofer" ||
+                          session.user.role === "Encargado"
+                            ? true
+                            : false
                         }
                       />
                     </div>
