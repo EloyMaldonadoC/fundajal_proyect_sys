@@ -28,8 +28,30 @@
 }
 .busqueda {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 12px;
+}
+.calendario {
+    appearance: none;
+    background-color: var(--components-color);
+    color: var(--text-color);
+    box-sizing: border-box;
+    padding: 2px 8px 2px 8px;
+    border-radius: 16px;
+    border: 0px solid var(--components-color);
+    text-align: center;
+    
+    transition: box-shadow 0.4s ease;
+}
+.calendario:hover {
+    box-shadow: 4px 4px 6px var(--shadow-color);
+}
+.fecha {
+    appearance: none;
+    color: var(--text-color);
+    border: 0px solid var(--components-color);
+    text-align: center;
 }
 .filtro {
     box-sizing: border-box;
