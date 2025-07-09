@@ -21,9 +21,10 @@ export async function GET(req) {
         entrega_vehiculo,
         empleado_entraga,
       ] = await connection.query(
-        `SELECT * FROM entregas
-          ORDER BY CASE WHEN entregas.en_dia_entrega IS NULL THEN 0 ELSE 1 END,
-          entregas.en_dia_entrega DESC LiMIT ${limit} OFFSET ${offset};
+          `SELECT e.* FROM (SELECT DISTINCT en_id FROM empleado_entraga) ee
+          JOIN entregas e ON ee.en_id = e.en_id
+          ORDER BY e.en_dia_entrega IS NULL THEN 0 ELSE 1 END,
+          e.en_dia_entrega DESC LIMIT ${limit} OFFSET ${offset};
           
           SELECT * FROM vehiculos;
     
