@@ -355,43 +355,41 @@ function Preparacion() {
           hist_motivo: "entrega",
         };
       });
-      await fetch(`/api/inventario/historial/lista`, {
+      const responseHistorial = await fetch(`/api/inventario/historial/lista`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(historial),
-      }).then((response) => {
-        if (!response.ok) {
+      })
+      if (!responseHistorial.ok) {
           throw new Error("Response post historia is not ok");
         }
-        return response.json();
-      });
-      //editar estado de la entrega
-      await fetch(`/api/entregas/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ en_estado: "recibir" }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Response is not ok");
-          }
-          return response.json();
-        })
-        .catch((error) => {
-          setError(error);
-        });
+      
       //editar estado de los productos
-      await fetch(`/api/entregas/productos/removeInventary`, {
+      const responseProductos = await fetch(`/api/entregas/productos/removeInventary`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(totalProductos),
       });
+
+      if (!responseProductos.ok) {
+        throw new Error("Response is not ok");
+      }
+      
+      //editar estado de la entrega
+      const responseEstado = await fetch(`/api/entregas/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ en_estado: "recibir" }),
+      });
+      if (!responseEstado.ok) {
+        throw new Error("Response is not ok");
+      }
 
       router.push(`/entregas`);
     }
